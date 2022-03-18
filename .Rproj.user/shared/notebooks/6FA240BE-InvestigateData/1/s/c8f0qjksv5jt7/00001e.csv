@@ -1,0 +1,4 @@
+"0","branch_length = findOutlier(IGC1_BLength, 1)[1:9,2:4]"
+"0","branch_length_sorted = branch_length[order(branch_length[,3], decreasing = T),]"
+"0","colnames(branch_length_sorted) = c(""Pillar"",""branch"",""branch_length"")"
+"0","kable(branch_length_sorted, caption = ""According to the table, we decided to exclude data with significant long branch length.\nWe selected data with branch length greater than 2."")"

@@ -1,0 +1,4 @@
+"0","branch_tau = findOutlier(IGC1_Btau, 0.5)"
+"0","branch_tau_sorted = branch_tau[order(branch_tau[,4], decreasing = T),2:4]"
+"0","colnames(branch_tau_sorted) = c(""Pillar"",""Branch"", ""tau_value"")"
+"0","kable(branch_tau_sorted, caption = ""This table explained why we exclude data Pillar3994."")"

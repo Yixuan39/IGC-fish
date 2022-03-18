@@ -1,0 +1,53 @@
+#!/bin/python3
+
+from IGCexpansion.JointAnalysis import *
+import re
+
+def atoi(text):
+    return int(text) if text.isdigit() else text
+def natural_keys(text):
+    return [ atoi(c) for c in re.split('(\d+)',text) ]
+
+if __name__ == '__main__':
+
+    inputFolder = 'IGC_R'
+    outputName = 'Joint_Analysis_'
+
+    # parameters
+    Force = None
+    IGC_Omega = 1
+    Tau_Omega = None
+    Model = 'MG94'
+    Shared = [4]
+
+    # files = os.listdir('../../' + inputFolder)
+    # files = ['../../'+inputFolder+'/' + file for file in files if 'fasta' in file]
+    # files.sort(key=natural_keys)
+    # paralog_list = [['01_'+re.findall(r'\d+', file)[0], '02_'+re.findall(r'\d+', file)[0]] for file in files]
+    # alignment_file_list = files
+    # newicktree = '../../'+inputFolder+'/tree.newick'
+    alignment_file_1 = '../../test/YLR406C_YDL075W_test_input.fasta'
+    alignment_file_2 = '../../test/YDR418W_YEL054C_old_input.fasta'
+    newicktree = '../../test/YeastTree.newick'
+
+    paralog_list = [paralog_1, paralog_2]
+    alignment_file_list = [alignment_file_1, alignment_file_2]
+
+    save_path = './save/'
+    summary_path = './summary/'
+    os.makedirs(save_path, exist_ok=True) # save parameters
+    os.makedirs(summary_path, exist_ok=True) # save summary
+    print('start to analyze')
+    print('Input: ' + inputFolder)
+    print('Job name: ' + outputName)
+    print('IGC_Omega: ' + str(IGC_Omega))
+    print('Tau_Omega: ' + str(Tau_Omega))
+    print('Shared:' + str(Shared))
+    print('number of files: ' + str(len(files)))
+    joint_analysis = JointAnalysis(alignment_file_list, newicktree, paralog_list, Shared=Shared,
+                                   IGC_Omega=IGC_Omega, Tau_Omega=Tau_Omega, Model=Model, Force=Force,
+                                   save_path=save_path)
+    print(joint_analysis.objective_and_gradient_multi_threaded(joint_analysis.x))
+    # print(joint_analysis.objective_and_gradient(joint_analysis.x))
+    joint_analysis.get_mle()
+    joint_analysis.get_summary(summary_path + outputName + 'Summary.txt')

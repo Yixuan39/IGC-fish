@@ -1,0 +1,27 @@
+number of sites to be analyzed:  138
+Traceback (most recent call last):
+  File "/var/spool/slurmd/job160475/slurm_script", line 29, in <module>
+    geneconv.get_mle()
+  File "/home5/yyang55/pythonPackages/IGCexpansion/CodonGeneconv.py", line 912, in get_mle
+    result = scipy.optimize.minimize(f, guess_x, jac = True, method = 'L-BFGS-B', bounds = bnds)
+  File "/home5/yyang55/pythonPackages/scipy/optimize/_minimize.py", line 681, in minimize
+    res = _minimize_lbfgsb(fun, x0, args, jac, bounds,
+  File "/home5/yyang55/pythonPackages/scipy/optimize/_lbfgsb_py.py", line 308, in _minimize_lbfgsb
+    sf = _prepare_scalar_function(fun, x0, jac=jac, args=args, epsilon=eps,
+  File "/home5/yyang55/pythonPackages/scipy/optimize/_optimize.py", line 263, in _prepare_scalar_function
+    sf = ScalarFunction(fun, x0, args, grad, hess,
+  File "/home5/yyang55/pythonPackages/scipy/optimize/_differentiable_functions.py", line 158, in __init__
+    self._update_fun()
+  File "/home5/yyang55/pythonPackages/scipy/optimize/_differentiable_functions.py", line 251, in _update_fun
+    self._update_fun_impl()
+  File "/home5/yyang55/pythonPackages/scipy/optimize/_differentiable_functions.py", line 155, in update_fun
+    self.f = fun_wrapped(self.x)
+  File "/home5/yyang55/pythonPackages/scipy/optimize/_differentiable_functions.py", line 137, in fun_wrapped
+    fx = fun(np.copy(x), *args)
+  File "/home5/yyang55/pythonPackages/scipy/optimize/_optimize.py", line 76, in __call__
+    self._compute_if_needed(x, *args)
+  File "/home5/yyang55/pythonPackages/scipy/optimize/_optimize.py", line 70, in _compute_if_needed
+    fg = self.fun(x, *args)
+  File "/home5/yyang55/pythonPackages/IGCexpansion/CodonGeneconv.py", line 814, in Clock_wrap
+    Lr_derives.append( edge_to_derives[('N' + str(i - 2), 'N' + str(i - 1))] * (self.x_Lr[i] / (self.x_Lr[i] - 1))# 
+KeyError: ('N2', 'N3')
