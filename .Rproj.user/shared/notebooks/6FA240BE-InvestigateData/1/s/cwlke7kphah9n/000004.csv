@@ -1,5 +1,0 @@
-"0","IGC1_BLength <- subset(IGC1_Full, str_detect(rownames(IGC1_Full), "
-"0","                      c(""tau|mut|1->2|2->1""), negate = TRUE))"
-"0",""
-"0","IGC1_BLength <- IGC1_BLength[9:nrow(IGC1_BLength),]"
-"0",""

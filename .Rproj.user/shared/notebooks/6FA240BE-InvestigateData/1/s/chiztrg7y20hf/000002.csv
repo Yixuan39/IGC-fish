@@ -1,2 +1,0 @@
-"0","IGC1_Full = t(IGC1_Full)"
-"0","IGC1_Btau <- subset(IGC1_Full, str_detect(rownames(IGC1_Full), ""tau""))"
