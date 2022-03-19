@@ -1,7 +1,21 @@
+---
+title: "Swap Test for 45 Gene Data Set"
+author: "Yixuan Yang"
+date: "3/19/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
 rm(list = ls()) # clean work space
-load('./Rdata/Fish.Rdata')
+load('../Rdata/Fish.Rdata')
+library(tidyverse)
+```
 
-
+```{r}
 #IGC1
 SwapTestRatio = data.frame(IGC1_Swap_Clock$tau, IGC1_Unswap_Clock$tau)
 colnames(SwapTestRatio) <- c("Swap_tau", "Unswap_tau")
@@ -25,3 +39,5 @@ ggplot() +
   geom_point(data = SwapTestRatio, aes(x = Swap_tau, y = Unswap_tau)) +
   geom_abline(slope = 1) +
   labs(title = "Swap Test in IGC omega model reparameter", subtitle = "for 45 fish data")
+
+```
