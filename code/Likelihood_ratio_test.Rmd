@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 rm(list = ls()) # clean work space
 load('../Rdata/Fish.Rdata')
 library(tidyverse)
+library(kableExtra)
 ```
 
 # Likelihood ratio test
@@ -44,7 +45,8 @@ colnames(llTest.table)[1:5] = c("new.tau", "old.tau", "new.omega", "old.omega", 
 # install.packages("webshot")
 # webshot::install_phantomjs()
 
-kable(llTest.table, "latex", booktabs = T) %>% 
+kable(llTest.table, "latex", booktabs = T, 
+      caption = "Likelihood Ratio Test") %>% 
   kable_styling(latex_options = c("striped", "scale_down")) %>%
   save_kable("../summary/llTestTable.pdf")
 ```
