@@ -156,10 +156,14 @@ IGC_summary = function(directory){
     folder = str_c(directory, "/", case, "/summary")
     files = list.files(folder)
     file = str_subset(files, "summary")
-    matrix = read.csv(file = str_c(folder, "/", file), header = FALSE, sep = " ")
-    num = matrix[1:((dim(matrix)[1]+1)/2-1),] %>% as.numeric()
-    name = matrix[((dim(matrix)[1]+1)/2+1):dim(matrix)[1],]
-    output = append(output,num)
+    if(length(files) > 0){
+      matrix = read.csv(file = str_c(folder, "/", file), header = FALSE, sep = " ")
+      num = matrix[1:((dim(matrix)[1]+1)/2-1),] %>% as.numeric()
+      name = matrix[((dim(matrix)[1]+1)/2+1):dim(matrix)[1],]
+      output = append(output,num)
+    }else{
+      print(case)
+    }
   }
   output = matrix(output, ncol = length(cases))
   rownames(output) = name

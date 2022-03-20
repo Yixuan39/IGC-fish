@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 rm(list = ls()) # clean work space
-load('../Rdata/Fish.Rdata')
+load('../Rdata/ForwardFish.Rdata')
 library(tidyverse)
 library(kableExtra)
 ```
