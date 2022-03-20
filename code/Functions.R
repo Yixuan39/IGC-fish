@@ -163,6 +163,7 @@ IGC_summary = function(directory){
       output = append(output,num)
     }else{
       print(case)
+      output = append(output,rep(NA, length(num)))
     }
   }
   output = matrix(output, ncol = length(cases))
