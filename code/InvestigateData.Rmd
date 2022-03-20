@@ -51,16 +51,12 @@ findOutlier <- function(data, standard){
 }
 ```
 
-
 ```{r, echo=FALSE}
 branch_length = findOutlier(IGC1_BLength, 1)[1:9,2:4]
 branch_length_sorted = branch_length[order(branch_length[,3], decreasing = T),]
 colnames(branch_length_sorted) = c("Pillar","branch","branch_length")
 kable(branch_length_sorted, caption = "According to the table, we decided to exclude data with significant long branch length. We selected data with branch length greater than 2.")
 ```
-
-
-
 
 ```{r, echo=FALSE}
 branch_tau = findOutlier(IGC1_Btau, 0.5)

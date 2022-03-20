@@ -17,7 +17,9 @@ library(kableExtra)
 ```
 
 # Likelihood ratio test
+
 compare between two model
+
 ```{r}
 llTest = data.frame(IGC1_Full$ll, IGC1_Full_igcOmega$ll)
 colnames(llTest) = c("oldModel", "newModel")

@@ -18,6 +18,7 @@ load('../Rdata/ForwardFish.Rdata')
 ```
 
 # Force $\tau$
+
 ```{r}
 Force = data.frame(IGC1_Full$omega, IGC1_Full_Force$omega, IGC1_Full_Force_igcOmega$omega)
 colnames(Force) = c("omega", "forceTau.omega", "new.forceTau.omega")
