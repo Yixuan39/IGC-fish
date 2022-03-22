@@ -2,6 +2,8 @@
 
 `code` folder store the R code
 
+* You will need `Rstudio` software to open ".Rmd" files
+
 ## Tree Topology
 <img src="./plots/fish-tree.png" alt="fish-tree" style="zoom:25%;" />
 
