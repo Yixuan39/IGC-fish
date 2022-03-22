@@ -13,3 +13,6 @@ Due to large branch length
 Pillar3994
 
 Due to unexpected large tau value (We found something strange in the sequence)
+
+## Swap Test
+For swap test, we choose to swap the name of stickleback fish and zebrafish in the gene sequence file
