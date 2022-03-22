@@ -2,19 +2,22 @@
 title: "Swap Test for 45 Gene Data Set"
 author: "Yixuan Yang"
 date: "3/19/2022"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, include=FALSE}
 rm(list = ls()) # clean work space
 load('../Rdata/ForwardFish.Rdata')
 library(tidyverse)
 ```
 
+# Compare tau
 ```{r}
 #IGC1
 SwapTestRatio = data.frame(IGC1_Swap_Clock$tau, IGC1_Unswap_Clock$tau)
@@ -40,4 +43,27 @@ ggplot() +
   geom_abline(slope = 1) +
   labs(title = "Swap Test in IGC omega model reparameter", subtitle = "for 45 fish data")
 
+```
+
+# Likelihood difference v.s. tau difference
+```{r}
+#IGC1
+SwapTestRatio = data.frame(IGC1_Unswap_Clock$ll - IGC1_Swap_Clock$ll, 
+                           IGC1_Unswap_Clock$tau - IGC1_Swap_Clock$tau)
+colnames(SwapTestRatio) <- c("llDiff", "tauDiff")
+ggplot() +
+  geom_point(data = SwapTestRatio, aes(x = llDiff, y = tauDiff)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  labs(title = "Swap Test", subtitle = "for 45 fish data")
+
+## Swap test with igc omega
+SwapTestRatio = data.frame(IGC1_Unswap_Clock_igcOmega$ll - IGC1_Swap_Clock_igcOmega$ll,
+                           IGC1_Unswap_Clock_igcOmega$tau - IGC1_Swap_Clock_igcOmega$tau)
+colnames(SwapTestRatio) <- c("llDiff", "tauDiff")
+ggplot() +
+  geom_point(data = SwapTestRatio, aes(x = llDiff, y = tauDiff)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  labs(title = "Swap Test in IGC omega model", subtitle = "likelihoood for 45 fish data")
 ```
