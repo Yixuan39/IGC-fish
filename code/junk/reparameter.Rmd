@@ -1,0 +1,47 @@
+---
+title: "Reparameter"
+author: "Yixuan Yang"
+date: "11/2/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+source("Functions.R")
+```
+
+```{r message=FALSE}
+IGC1_reparameter = ListFunction("IGC1_Full_TauOmega", "Matrix") %>% t()
+IGC2_reparameter = ListFunction("IGC2_Full_TauOmega", "Matrix") %>% t()
+```
+
+Joint analysis
+```{r}
+Share_tau_reparameter = ReadRep("inputFiles/JointAnalysisResult/Share_tau_reparameter/summary/Share_tau_reparameterSummary.txt")
+Share_all_reparameter = ReadRep("inputFiles/JointAnalysisResult/Share_all_reparameter/summary/Share_all_reparameterSummary.txt")
+save(file = "ShareOutcomes.Rdata", Share_all_reparameter, Share_tau_reparameter)
+```
+
+```{r}
+#hist(IGC1_Full_spomega[,"IGC_omega"])
+hist(IGC1_reparameter[,"tau_times_omega"]/IGC1_reparameter[,"tau"])
+#plot(IGC1_Full_spomega[,"ll"],IGC1_reparameter[,"ll"])
+#IGC1_Full_spomega[,"ll"]-IGC1_reparameter[,"ll"]
+MG211 = IGC1_Full_spomega[1,]
+save(file="./MG211.Rdata", MG211)
+```
+
+```{r}
+jointTau1 = ReadRep("inputFiles/JointAnalysisResult/JointTau1/summary/JointTau1Summary.txt")
+joint_igcOmega_igcOmega0.8 = ReadRep("inputFiles/JointAnalysisResult/joint_igcOmega_igcOmega=0.8/summary/joint_igcOmega_igcOmega=0.8Summary.txt")
+joint_all = ReadRep("inputFiles/JointAnalysisResult/Joint_all_tauOmega=1/summary/Joint_all_tauOmega=1Summary.txt")
+joint_force = ReadRep("inputFiles/JointAnalysisResult/Joint_igcOmega_ForceTau/summary/Joint_igcOmega_ForceTauSummary.txt")
+
+joint_omega_igc0 = ReadRep("inputFiles/JointAnalysisResult/Joint_omega_ForceTau/summary/Joint_omega_ForceTauSummary.txt")
+joint_omega_igc = ReadRep("inputFiles/JointAnalysisResult/Joint_omega/summary/Joint_omegaSummary.txt")
+
+save(file="jointTests.Rdata", joint_all, joint_force)
+save(file="jointOmega.Rdata", joint_omega_igc, joint_omega_igc0)
+```
+

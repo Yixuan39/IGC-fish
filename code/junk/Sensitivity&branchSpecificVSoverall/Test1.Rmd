@@ -1,0 +1,32 @@
+---
+title: "Untitled"
+author: "Yixuan Yang"
+date: "8/23/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+```
+
+```{r Readin211}
+getwd()
+path = "211/save/MG94_01_02_nonclock_summary.txt"
+
+v <- scan(path, what = character())
+splitPoint = (length(v) - 1)/2
+value <- as.numeric(v[1:splitPoint])
+names <- v[(splitPoint + 2):length(v)]
+#names(value) <- names
+value <- cbind(names, value)
+eg211 <- value %>% as.data.frame()
+```
+
+```{r}
+### Test of Pillar 211
+library(gridExtra)
+pdf("eg211.pdf", height = 35, width = 5)
+grid.table(eg211)
+dev.off()
+```

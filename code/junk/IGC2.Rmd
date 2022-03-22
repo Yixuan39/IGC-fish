@@ -1,0 +1,274 @@
+---
+title: "IGC2"
+author: "Yixuan Yang"
+date: "6/20/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+rm(list = ls())
+knitr::opts_chunk$set(echo = TRUE)
+library(DT)
+library(dplyr)
+library(ggplot2)
+library(stringr)
+source("../Functions.R")
+```
+
+```{r, include=FALSE}
+IGC1_Full_noforce_noclock <- ListFunction("junk/IGC1_Full_noforce_noclock","List")
+IGC2_Full_noforce_noclock <- ListFunction("junk/IGC2_Full_noforce_noclock","List")
+IGC1_Full_noforce_noclock_Matrix <- ListFunction("junk/IGC1_Full_noforce_noclock","Matrix")
+IGC2_Full_noforce_noclock_Matrix <- ListFunction("junk/IGC2_Full_noforce_noclock","Matrix")
+IGC2_Full_noforce_noclock_newNode <- ListFunction("junk/IGC2_Full_noforce_noclock2", "List")
+
+```
+
+```{r, echo=FALSE}
+# Calculate proportion
+igc.proportion <- function(dataset){
+    out = c()
+    namelist <- colnames(dataset)
+    one2two <- c()
+    two2one <- c()
+    mut <- c()
+    for(i in namelist){
+      if(str_detect(i,"1->2")){
+        if (str_detect(i,"N0")==FALSE){
+          one2two <- append(one2two,i)
+        }
+      }
+      
+      if(str_detect(i,"2->1")){
+        if (str_detect(i,"N0")==FALSE){
+          two2one <- append(two2one,i)
+        }
+      }
+      
+      if(str_detect(i,"mut")){
+        if (str_detect(i,"N0")==FALSE){
+          mut <- append(mut,i)
+        }
+      }
+    }
+    for(j in 1:dim(dataset)[1]){
+      one2twoSum <- sum(dataset[j, one2two])
+      two2oneSum <- sum(dataset[j, two2one])
+      mutSum <- sum(dataset[j, mut])
+      num <- sum(one2twoSum, two2oneSum)
+      den <- sum(num, mutSum)
+      p = num/den
+      out = rbind(out,c(rownames(dataset)[j], p))
+    }
+    out = data.frame(out, row.names = 1)
+    names(out) = "proportion"
+    out[,1] = as.numeric(out[,1])
+    return(out)
+}
+igc.proportion(IGC1_Full)
+```
+
+
+```{r, echo=FALSE}
+tau.IGC1 <- c()
+for(i in IGC1_Full_noforce_noclock){
+  tau.IGC1 <- append(tau.IGC1, i[9])
+}
+names(tau.IGC1) <- names(IGC1_Full_noforce_noclock)
+tau.IGC2 <- c()
+for(i in IGC2_Full_noforce_noclock){
+  tau.IGC2 <- append(tau.IGC2, i[9])
+}
+names(tau.IGC2) <- names(IGC2_Full_noforce_noclock)
+tau.proportion.IGC1 <- proportionWhole(IGC1_Full_noforce_noclock)
+tau.proportion.IGC2 <- proportionWhole(IGC2_Full_noforce_noclock)
+```
+
+
+```{r eval=FALSE, include=FALSE}
+sort(proportion_IGC2)
+datatable(data.frame(proportion_IGC2))
+```
+
+```{r eval=FALSE, include=FALSE}
+omega = c()
+for(i in List2){
+  value <- IGC2_Full_noforce_noclock[[i]][8]
+  names(value) <- i
+  omega = append(omega,value)
+}
+plot(omega,proportion_IGC2)
+cor(omega,proportion_IGC2)
+s = lm(proportion_IGC2~omega)
+abline(s)
+```
+
+```{r echo=FALSE, warning=FALSE, include=FALSE}
+IGC1_Swap_noforce_clock <- ListFunction("junk/IGC1_Swap_noforce_clock_old","List")
+IGC1_Unswap_noforce_clock <- ListFunction("junk/IGC1_Unswap_noforce_clock_old","List")
+IGC2_Swap_noforce_clock <- ListFunction("junk/IGC2_Swap_noforce_clock_old","List")
+IGC2_Unswap_noforce_clock <- ListFunction("junk/IGC2_Unswap_noforce_clock_old","List")
+```
+
+```{r, include=FALSE}
+# M stand for missing paralog gene dataset
+swapTau_M <- c()
+swapLL_M  <- c()
+
+for(i in IGC2_Swap_noforce_clock){
+  swapTau_M <- append(swapTau_M,i[9])
+  swapLL_M  <- append(swapLL_M,i[2])
+}
+names(swapTau_M) <- names(IGC2_Unswap_noforce_clock)
+names(swapLL_M)  <- names(IGC2_Unswap_noforce_clock)
+
+unswapTau_M <- c()
+unswapLL_M  <- c()
+
+for(i in IGC2_Unswap_noforce_clock){
+  unswapTau_M <- append(unswapTau_M,i[9])
+  unswapLL_M  <- append(unswapLL_M,i[2])
+}
+names(unswapTau_M) <- names(IGC2_Unswap_noforce_clock)
+names(unswapLL_M)  <- names(IGC2_Unswap_noforce_clock)
+
+# F stand for full gene dataset
+swapTau_F <- c()
+swapLL_F  <- c()
+
+for(i in IGC1_Swap_noforce_clock){
+  swapTau_F <- append(swapTau_F,i[9])
+  swapLL_F  <- append(swapLL_F,i[2])
+}
+names(swapTau_F) <- names(IGC1_Unswap_noforce_clock)
+names(swapLL_F)  <- names(IGC1_Unswap_noforce_clock)
+
+unswapTau_F <- c()
+unswapLL_F  <- c()
+
+for(i in IGC1_Unswap_noforce_clock){
+  unswapTau_F <- append(unswapTau_F,i[9])
+  unswapLL_F  <- append(unswapLL_F,i[2])
+}
+names(unswapTau_F) <- names(IGC1_Unswap_noforce_clock)
+names(unswapLL_F)  <- names(IGC1_Unswap_noforce_clock)
+
+# length
+length_M <- c()
+for(i in IGC2_Unswap_noforce_clock){
+  length_M <- append(length_M,i[1])
+}
+names(length_M) <- names(IGC2_Unswap_noforce_clock)
+
+length_F <- c()
+for(i in IGC1_Unswap_noforce_clock){
+  length_F <- append(length_F,i[1])
+}
+names(length_F) <- names(IGC1_Unswap_noforce_clock)
+
+
+```
+
+
+```{r, echo=FALSE, include=FALSE}
+tau.dif.M <- unswapTau_M - swapTau_M
+ll.dif.M  <- unswapLL_M - swapLL_M
+SwapTestM <- matrix(c(length_M,ll.dif.M,tau.dif.M), ncol = 3) %>% as.data.frame()
+colnames(SwapTestM)=c("length","ll.dif","tau.dif")
+
+plot(ll.dif.M,tau.dif.M,main="loglikelihood different vs tau different for missing paralog dataset",xlab = "loglikelihood difference",ylab = "tau different", sub = "plot 1")
+abline(h=0, col="blue")
+abline(v=0, col="red")
+
+tau.dif.F <- unswapTau_F - swapTau_F
+ll.dif.F  <- unswapLL_F - swapLL_F
+SwapTestF <- matrix(c(length_F,ll.dif.F,tau.dif.F), ncol = 3) %>% as.data.frame()
+colnames(SwapTestF)=c("length","ll.dif","tau.dif")
+
+plot(ll.dif.F,tau.dif.F, main="loglikelihood different vs tau different for full paralog dataset",xlab = "loglikelihood difference",ylab = "tau different", sub = "plot 2")
+abline(h=0, col="blue")
+abline(v=0, col="red")
+
+plot(swapTau_M,unswapTau_M, main = "swap tau vs unswap tau for missing paralog dataset", xlab = "swap tau", ylab = "unswap tau", sub = "plot 3")
+abline(coef = c(0,1))
+
+plot(swapTau_F,unswapTau_F, main = "swap tau vs unswap tau for full paralog dataset", xlab = "swap tau", ylab = "unswap tau", sub = "plot 4")
+abline(coef = c(0,1))
+
+# influence of length
+ggplot(SwapTestM, aes(x=ll.dif, y=tau.dif, color=length)) + geom_point() + scale_color_gradientn(colours = rainbow(5)) + ggtitle("loglikelihood different vs tau different for missing paralog dataset", subtitle = "plot 5") + xlab("loglikelihood different") + ylab("tau different")
+ggplot(SwapTestF, aes(x=ll.dif, y=tau.dif, color=length)) + geom_point() + scale_color_gradientn(colours = rainbow(5)) + ggtitle("loglikelihood different vs tau different for full paralog dataset", subtitle = "plot 6") + xlab("loglikelihood different") + ylab("tau different")
+```
+# histograms
+```{r histograms}
+hist(tau.IGC1, main = "tau value for no-missing-paralog dataset", sub = paste("Mean: ", round(mean(tau.IGC1),4),"\nStandard Deviation: ", round(sd(tau.IGC1),4), sep = ""), xlab = "")
+
+hist(tau.IGC2, main = "tau value for missing-paralog dataset", sub = paste("Mean: ", round(mean(tau.IGC2),4),"\nStandard Deviation: ", round(sd(tau.IGC2),4), sep = ""), xlab = "")
+
+hist(tau.proportion.IGC1, main = "Proportion of changes due to IGC for no-missing-paralog dataset", sub = paste("Mean: ", round(mean(tau.proportion.IGC1),4),"\nStandard Deviation: ", round(sd(tau.proportion.IGC1),4), sep = ""), xlab = "")
+
+hist(tau.proportion.IGC2, main = "Proportion of changes due to IGC for missing-paralog dataset", sub = paste("Mean: ", round(mean(tau.proportion.IGC2),4),"\nStandard Deviation: ", round(sd(tau.proportion.IGC2),4), sep = ""), xlab = "")
+
+hist(swapTau_F, main = "tau value for swapped no-missing-paralog dataset")
+hist(unswapTau_F, main = "tau value for unswapped no-missing-paralog dataset")
+hist(swapTau_M, main = "tau value for swapped missing-paralog dataset")
+hist(unswapTau_M, main = "tau value for unswapped missing-paralog dataset")
+
+barplot(tau.IGC1, main = "tau value for no-missing-paralog dataset")
+barplot(tau.IGC2, main = "tau value for missing-paralog dataset")
+barplot(tau.proportion.IGC1, main = "Proportion of changes due to IGC for no-missing-paralog dataset")
+barplot(tau.proportion.IGC2, main = "Proportion of changes due to IGC for missing-paralog dataset")
+barplot(swapTau_F, main = "tau value for swapped no-missing-paralog dataset")
+barplot(unswapTau_F, main = "tau value for unswapped no-missing-paralog dataset")
+barplot(swapTau_M, main = "tau value for swapped missing-paralog dataset")
+barplot(unswapTau_M, main = "tau value for unswapped missing-paralog dataset")
+```
+
+```{r}
+tau <- c()
+for(i in IGC1_Full_noforce_noclock){
+  tau <- append(tau, i[9])
+}
+sort(tau)
+mean(tau)
+
+omega <- c()
+for(i in IGC1_Full_noforce_noclock){
+  omega <- append(omega, i[8])
+}
+sort(omega)
+mean(omega)
+
+```
+
+```{r}
+Sensitivity <- ListFunction("TauValues", "Matrix")
+IGC_estimate <-as.vector(IGC1_Full_noforce_noclock$MG211)
+Sensitivity <- cbind(Sensitivity, IGC_estimate)
+save(Sensitivity, file = "sensitivity.Rdata")
+```
+
+```{r}
+a <- c()
+b <- c()
+for(i in IGC1_Full_noforce_noclock){
+  a <- append(a, i[9])
+  b <- append(b, i[26:41])
+}
+b <- matrix(b, nrow = 16)
+rownames(b) <- names(IGC1_Full_noforce_noclock[[1]][26:41])
+names(a) <- names(IGC1_Full_noforce_noclock)
+colnames(b) <- names(IGC1_Full_noforce_noclock)
+
+pdf("branch.specific.vs.overall.pdf",height=6,width=8)
+for(j in 1:16){
+  n <- names(IGC1_Full_noforce_noclock[[1]][26:41])[j]
+  plot(a, b[j,], type = "n", xlab = "overallTau", ylab = n)
+  text(a,b[j,], substr(names(b[j,]),3,length(names(b[j,]))))
+  abline(a=0, b=1)
+}
+dev.off()
+```
+
