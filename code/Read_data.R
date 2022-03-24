@@ -47,6 +47,8 @@ IGC1_Swap_Clock_igcOmega = IGC_summary(str_c(path, 'IGC1_Swap_Clock_igcOmega08')
 IGC1_Unswap_Clock_igcOmega = IGC_summary(str_c(path, 'IGC1_Unswap_Clock_igcOmega08'))
 IGC1_Swap_Clock_reparameter = IGC_summary(str_c(path, 'IGC1_Swap_Clock_reparameter1'))
 IGC1_Unswap_Clock_reparameter = IGC_summary(str_c(path, 'IGC1_Unswap_Clock_reparameter1'))
+IGC1_Full_igcOmega0 = IGC_summary(str_c(path, 'IGC1_Full_igcOmega0'))
+IGC1_Full_igcOmega0_tau0 = IGC_summary(str_c(path, 'IGC1_Full_igcOmega0_tau0'))
 
 save.image(file = "./Rdata/CenterFish.Rdata")
 
