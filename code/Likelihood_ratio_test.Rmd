@@ -9,7 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+```{r, include=FALSE}
 rm(list = ls()) # clean work space
 load('../Rdata/CenterFish.Rdata')
 library(tidyverse)
@@ -18,9 +18,7 @@ library(kableExtra)
 
 # Likelihood ratio tests
 
-compare likelihood between two models
-
-```{r}
+```{r, include=FALSE}
 llTest = data.frame(IGC1_Full$ll, IGC1_Full_igcOmega$ll)
 colnames(llTest) = c("oldModel", "newModel")
 plot1 = ggplot() +
@@ -32,9 +30,8 @@ plot2 = ggplot() +
 
 gridExtra::grid.arrange(plot1, plot2, ncol = 2)
 ```
-## Generate table that compare likelihood
 
-```{r}
+```{r, include=FALSE}
 two_times_llDif = 2*(IGC1_Full_igcOmega$ll - IGC1_Full$ll)
 p_values = 1-pchisq(two_times_llDif, df=1) %>% round(4)
 llTest.table = data.frame(IGC1_Full_igcOmega$tau, IGC1_Full$tau,
@@ -55,4 +52,54 @@ kable(llTest.table, "latex", booktabs = T,
   row_spec(which(llTest.table$`igc.omega/new.tau` < 1), color="red") %>%
   kable_styling(latex_options = c("striped", "scale_down")) %>%
   save_kable("../summary/llTestTable.pdf")
+```
+
+
+
+```{r, echo=FALSE}
+two_times_llDif = 2*(IGC1_Full_igcOmega$ll - IGC1_Full_igcOmega0$ll)
+p_values = 1-pchisq(two_times_llDif, df=1) %>% round(4)
+llTest.table = data.frame(IGC1_Full_igcOmega$tau, IGC1_Full_igcOmega0$tau,
+                          IGC1_Full_igcOmega$omega, IGC1_Full_igcOmega0$omega,
+                          IGC1_Full_igcOmega$IGC_omega / IGC1_Full_igcOmega$tau,
+                          two_times_llDif, p_values)
+rownames(llTest.table) = rownames(IGC1_Full)
+llTest.table[,"reject at 0.05"] = llTest.table$p_values < 0.05
+colnames(llTest.table)[1:5] = c("tau.alter", "tau.null", "omega.alter", "omega.null", "omega'")
+
+# some extra code
+# install.packages("magick")
+# install.packages("webshot")
+# webshot::install_phantomjs()
+
+kable(llTest.table, "latex", booktabs = T, 
+      caption = "Likelihood Ratio Test: tau'=0 vs tau' is free") %>% 
+  row_spec(which(llTest.table$p_values > 0.05), color="red") %>%
+  kable_styling(latex_options = c("striped", "scale_down"))
+  #save_kable("../summary/test_IGC.pdf")
+```
+
+
+
+```{r, echo=FALSE}
+two_times_llDif = 2*(IGC1_Full_igcOmega0$ll - IGC1_Full_igcOmega0_tau0$ll)
+p_values = 1-pchisq(two_times_llDif, df=1) %>% round(4)
+llTest.table = data.frame(IGC1_Full_igcOmega0$tau, IGC1_Full_igcOmega0_tau0$tau,
+                          IGC1_Full_igcOmega0$omega, IGC1_Full_igcOmega0_tau0$omega,
+                          # IGC1_Full_igcOmega$IGC_omega / IGC1_Full_igcOmega$tau,
+                          two_times_llDif, p_values)
+rownames(llTest.table) = rownames(IGC1_Full)
+llTest.table[,"reject at 0.05"] = llTest.table$p_values < 0.05
+colnames(llTest.table)[1:4] = c("tau.alter", "tau.null", "omega.alter", "omega.null")
+
+# some extra code
+# install.packages("magick")
+# install.packages("webshot")
+# webshot::install_phantomjs()
+
+kable(llTest.table, "latex", booktabs = T, 
+      caption = "Likelihood Ratio Test: tau=0, tau'=0 vs tau'=0") %>% 
+  row_spec(which(llTest.table$p_values > 0.05), color="red") %>%
+  kable_styling(latex_options = c("striped", "scale_down"))
+  #save_kable("../summary/test_IGC.pdf")
 ```
