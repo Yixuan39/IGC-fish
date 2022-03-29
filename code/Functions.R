@@ -138,6 +138,8 @@ joint_summary = function(file){
   header = header[-1]
   rowNames = read.csv(file = file, sep = " ", header = F, skip = nrow(read.table(file = file, header = F)) - 1)[3,]
   rowNames = rowNames[-1]
+  header = t(data.frame(str_split(header,"_")))[,2] %>% as.vector()
+  header = str_c("Pillar", header)
   colnames(table) <- header
   rownames(table) <- rowNames
   table = as.data.frame(t(table))
