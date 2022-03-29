@@ -50,5 +50,14 @@ IGC1_Unswap_Clock_reparameter = IGC_summary(str_c(path, 'IGC1_Unswap_Clock_repar
 IGC1_Full_igcOmega0 = IGC_summary(str_c(path, 'IGC1_Full_igcOmega0'))
 IGC1_Full_igcOmega0_tau0 = IGC_summary(str_c(path, 'IGC1_Full_igcOmega0_tau0'))
 
+## joint analysis
+path = './input_files/CenterDiff/JointAnalysis/'
+Joint_2omega = joint_summary(str_c(path, 'Joint_2omega_newModel'))
+Joint_igcOmega = joint_summary(str_c(path, 'Joint_igcOmega_newModel'))
+Joint_omega = joint_summary(str_c(path, 'Joint_omega'))
+
+Joint_tau = joint_summary(str_c(path, 'Joint_tau'))
+Joint_tau_igcOmega = joint_summary(str_c(path, 'Joint_tau_igcOmega08'))
+
 save.image(file = "./Rdata/CenterFish.Rdata")
 
