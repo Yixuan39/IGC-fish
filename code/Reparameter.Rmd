@@ -14,7 +14,7 @@ rm(list = ls()) # clean current data
 # import packages
 library(tidyverse)
 source("Functions.R")
-load('../Rdata/ForwardFish.Rdata')
+load('../Rdata/CenterFish.Rdata')
 ```
 
 # IGC omega

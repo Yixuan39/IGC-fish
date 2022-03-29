@@ -143,6 +143,7 @@ joint_summary = function(file){
   colnames(table) <- header
   rownames(table) <- rowNames
   table = as.data.frame(t(table))
+  table[,2] = -table[,2] # convert to negative log-likelihood
   return(table)
 }
 
