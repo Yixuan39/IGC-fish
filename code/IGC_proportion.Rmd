@@ -13,14 +13,12 @@ knitr::opts_chunk$set(echo = TRUE)
 rm(list = ls()) # clean current data
 # import packages
 library(tidyverse)
-library(kableExtra)
+library(gt)
 source("Functions.R")
 load('../Rdata/CenterFish.Rdata')
 ```
 
-# Function for IGC proportion
-
-```{r}
+```{r, include=FALSE}
 # Calculate proportion
 igc.proportion <- function(dataset){
     out = c()
@@ -56,17 +54,31 @@ igc.proportion <- function(dataset){
       p = num/den
       out = rbind(out,c(rownames(dataset)[j], p))
     }
-    out = data.frame(out, row.names = 1)
-    names(out) = "proportion"
-    out[,1] = as.numeric(out[,1])
+    out = data.frame(out)
+    names(out) = c("names","proportion")
+    out[,2] = as.numeric(out[,2])
     return(out)
 }
 ```
 
-```{r}
-old.model.igc=igc.proportion(IGC1_Full)
-new.model.igc=igc.proportion(IGC1_Full_igcOmega)
-plot(x=old.model.igc[,1],y=new.model.igc[,1])
-abline(a=0,b=1)
-kable(new.model.igc)
+```{r, include=FALSE}
+old.model.igc=igc.proportion(IGC1_Full) %>% arrange(proportion)
+new.model.igc=igc.proportion(IGC1_Full_igcOmega) %>% arrange(proportion)
+# plot(x=old.model.igc[,1],y=new.model.igc[,1])
+# abline(a=0,b=1)
+
+# proportion for share tau and tau'
+igc.p.tau_and_igcOmega = igc.proportion(Joint_tau_and_igcOmega) %>% arrange(proportion)
 ```
+
+
+## 39 fish data
+```{r, echo=FALSE}
+old.model.igc %>% gt() %>% tab_header("Model with one omega")
+new.model.igc %>% gt() %>% tab_header("Model with two omegas")
+igc.p.tau_and_igcOmega %>% gt() %>% tab_header("Model with two omegas", subtitle = "Sharing tau and tau'")
+
+
+```
+
+
