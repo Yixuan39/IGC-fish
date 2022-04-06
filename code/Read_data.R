@@ -1,5 +1,6 @@
-rm(list = ls())
-source('./code/Functions.R')
+# Remove old Rdata files
+file.remove("./Rdata/ForwardFish.Rdata")
+file.remove("./Rdata/CenterFish.Rdata")
 
 # read in data
 # forward differentiation
@@ -55,9 +56,11 @@ path = './input_files/CenterDiff/JointAnalysis/'
 Joint_2omega = joint_summary(str_c(path, 'Joint_2omega_newModel'))
 Joint_igcOmega = joint_summary(str_c(path, 'Joint_igcOmega_newModel'))
 Joint_omega = joint_summary(str_c(path, 'Joint_omega'))
+Joint_omega_igcOmega = joint_summary(str_c(path, 'Joint_omega_newModel'))
 
 Joint_tau = joint_summary(str_c(path, 'Joint_tau'))
 Joint_tau_igcOmega = joint_summary(str_c(path, 'Joint_tau_igcOmega08'))
+Joint_tau_and_igcOmega = joint_summary(str_c(path, 'Joint_tau+igcOmega08'))
 
 save.image(file = "./Rdata/CenterFish.Rdata")
 
