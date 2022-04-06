@@ -169,6 +169,11 @@ IGC_summary = function(directory){
   rownames(output) = name
   colnames(output) = str_c("Pillar", cases)
   output = t(output) %>% as.data.frame()
+  # exclude 6 data
+  `%ni%` <- Negate(`%in%`)
+  output = output %>% filter(row.names(output) %ni%
+                               c("Pillar852",	"Pillar4287", "Pillar561",
+                                 "Pillar2321", "Pillar3278", "Pillar3994"))
   return(output)
 }
 
