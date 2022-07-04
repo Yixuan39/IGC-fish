@@ -103,3 +103,68 @@ kable(llTest.table, "latex", booktabs = T,
   kable_styling(latex_options = c("striped", "scale_down"))
   #save_kable("../summary/test_IGC.pdf")
 ```
+
+```{r, include=FALSE}
+#####################
+two_times_llDif = 2*(IGC1_Full_Homo$ll - IGC1_Full$ll)
+p_values = 1-pchisq(two_times_llDif, df=1) %>% round(4)
+llTest.table = data.frame(IGC1_Full_Homo$tau, IGC1_Full$tau,
+                          IGC1_Full_Homo$omega, IGC1_Full$omega,
+                          IGC1_Full_Homo$homogenizing_omega / IGC1_Full_Homo$tau,
+                          two_times_llDif, p_values)
+rownames(llTest.table) = rownames(IGC1_Full)
+llTest.table[,"reject at 0.05"] = llTest.table$p_values < 0.05
+colnames(llTest.table)[1:5] = c("new.tau", "old.tau", "new.omega", "old.omega", "homo.omega/tau")
+print(llTest.table)
+# some extra code
+# install.packages("magick")
+# install.packages("webshot")
+# webshot::install_phantomjs()
+
+# kable(llTest.table, "latex", booktabs = T, 
+#       caption = "Likelihood Ratio Test: one omega model v.s. model with igc omega") %>% 
+#   row_spec(which(llTest.table$`igc.omega/new.tau` < 1), color="red") %>%
+#   kable_styling(latex_options = c("striped", "scale_down")) %>%
+#   save_kable("../summary/llTestTable.pdf")
+```
+
+```{r, include=FALSE}
+two_times_llDif = 2*(IGC1_Full_Homo$ll - IGC1_Full_igcOmega$ll)
+p_values = 1-pchisq(two_times_llDif, df=1) %>% round(4)
+llTest.table = data.frame(IGC1_Full_Homo$tau, IGC1_Full_igcOmega$tau,
+                          IGC1_Full_Homo$omega, IGC1_Full_igcOmega$omega,
+                          IGC1_Full_Homo$homogenizing_omega / IGC1_Full_Homo$tau,
+                          two_times_llDif, p_values)
+rownames(llTest.table) = rownames(IGC1_Full)
+llTest.table[,"reject at 0.05"] = llTest.table$p_values < 0.05
+colnames(llTest.table)[1:5] = c("new.tau", "old.tau", "new.omega", "old.omega", "homo.omega/tau")
+print(llTest.table)
+# some extra code
+# install.packages("magick")
+# install.packages("webshot")
+# webshot::install_phantomjs()
+
+# kable(llTest.table, "latex", booktabs = T, 
+#       caption = "Likelihood Ratio Test: one omega model v.s. model with igc omega") %>% 
+#   row_spec(which(llTest.table$`igc.omega/new.tau` < 1), color="red") %>%
+#   kable_styling(latex_options = c("striped", "scale_down")) %>%
+#   save_kable("../summary/llTestTable.pdf")
+```
+
+
+
+```{r}
+t = data.frame(IGC1_Full_forceTau$ll, IGC1_Full$ll - IGC1_Full_forceTau$ll, IGC1_Full_igcOmega$ll - IGC1_Full_forceTau$ll, IGC1_Full_Homo$ll - IGC1_Full_forceTau$ll)
+colnames(t) = c('noIGC logL', 'Xiang-noIGC llDiff', '2omega-noIGC llDiff', 'homoOmega-noIGC llDiff')
+rownames(t) = rownames(IGC1_Full)
+t
+
+IGC1_Full_forceTau[,c(1,7,8,9)]
+IGC1_Full[,c(7,8,9)]
+IGC1_Full_igcOmega[,c(7,8,9,10)]
+IGC1_Full_Homo[,c(7,8,9,10)]
+plot(IGC1_Full_Homo$tau, IGC1_Full$tau)
+abline(a=0,b=1)
+plot(IGC1_Full_Homo$omega, IGC1_Full_Homo$homogenizing_omega)
+abline(a=0, b=1)
+```

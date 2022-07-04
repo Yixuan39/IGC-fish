@@ -43,6 +43,14 @@ ggplot() +
   geom_abline(slope = 1) +
   labs(title = "Swap Test in IGC omega model reparameter", subtitle = "for 45 fish data")
 
+## Swap test with homogenizing omega
+SwapTestRatio = data.frame(IGC1_Swap_Clock_homoOmega$tau, IGC1_Unswap_Clock_homoOmega$tau)
+colnames(SwapTestRatio) <- c("Swap_tau", "Unswap_tau")
+ggplot() +
+  geom_point(data = SwapTestRatio, aes(x = Swap_tau, y = Unswap_tau)) +
+  geom_abline(slope = 1) +
+  labs(title = "Swap Test in homogenizing omega model", subtitle = "for 45 fish data")
+
 ```
 
 # Likelihood difference v.s. tau difference
@@ -66,4 +74,24 @@ ggplot() +
   geom_hline(yintercept = 0) +
   geom_vline(xintercept = 0) +
   labs(title = "Swap Test in IGC omega model", subtitle = "likelihoood for 45 fish data")
+
+## Swap test with tau omega
+SwapTestRatio = data.frame(IGC1_Unswap_Clock_reparameter$ll - IGC1_Swap_Clock_reparameter$ll,
+                           IGC1_Unswap_Clock_reparameter$tau - IGC1_Swap_Clock_reparameter$tau)
+colnames(SwapTestRatio) <- c("llDiff", "tauDiff")
+ggplot() +
+  geom_point(data = SwapTestRatio, aes(x = llDiff, y = tauDiff)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  labs(title = "Swap Test in tau omega model", subtitle = "likelihoood for 45 fish data")
+
+## Swap test with homo omega
+SwapTestRatio = data.frame(IGC1_Unswap_Clock_homoOmega$ll - IGC1_Swap_Clock_homoOmega$ll,
+                           IGC1_Unswap_Clock_homoOmega$tau - IGC1_Swap_Clock_homoOmega$tau)
+colnames(SwapTestRatio) <- c("llDiff", "tauDiff")
+ggplot() +
+  geom_point(data = SwapTestRatio, aes(x = llDiff, y = tauDiff)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  labs(title = "Swap Test in homogenizing omega model", subtitle = "likelihoood for 45 fish data")
 ```
