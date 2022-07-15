@@ -153,18 +153,3 @@ print(llTest.table)
 
 
 
-```{r}
-t = data.frame(IGC1_Full_forceTau$ll, IGC1_Full$ll - IGC1_Full_forceTau$ll, IGC1_Full_igcOmega$ll - IGC1_Full_forceTau$ll, IGC1_Full_Homo$ll - IGC1_Full_forceTau$ll)
-colnames(t) = c('noIGC logL', 'Xiang-noIGC llDiff', '2omega-noIGC llDiff', 'homoOmega-noIGC llDiff')
-rownames(t) = rownames(IGC1_Full)
-t
-
-IGC1_Full_forceTau[,c(1,7,8,9)]
-IGC1_Full[,c(7,8,9)]
-IGC1_Full_igcOmega[,c(7,8,9,10)]
-IGC1_Full_Homo[,c(7,8,9,10)]
-plot(IGC1_Full_Homo$tau, IGC1_Full$tau)
-abline(a=0,b=1)
-plot(IGC1_Full_Homo$omega, IGC1_Full_Homo$homogenizing_omega)
-abline(a=0, b=1)
-```

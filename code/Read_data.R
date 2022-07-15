@@ -38,8 +38,8 @@ source('./code/Functions.R')
 ### IGC1
 path = './input_files/CenterDiff/SingleAnalysis/'
 IGC1_Full = IGC_summary(str_c(path, 'IGC1_Full')) # original model
-IGC1_Full_ForceTau = IGC_summary(str_c(path, 'IGC1_Full_Force'))
-IGC1_Full_ForceTau_igcOmega = IGC_summary(str_c(path, 'IGC1_Full_Force_igcOmega08'))
+IGC1_Full_forceTau = IGC_summary(str_c(path, 'IGC1_Full_Force'))
+IGC1_Full_forceTau_igcOmega = IGC_summary(str_c(path, 'IGC1_Full_Force_igcOmega08'))
 IGC1_Full_igcOmega = IGC_summary(str_c(path, 'IGC1_Full_igcOmega08'))
 IGC1_Full_tauOmega = IGC_summary(str_c(path, 'IGC1_Full_reparameter1'))
 IGC1_Swap_Clock = IGC_summary(str_c(path, 'IGC1_Swap_Clock'))
@@ -67,6 +67,13 @@ Joint_omega_igcOmega = joint_summary(str_c(path, 'Joint_omega_newModel'))
 Joint_tau = joint_summary(str_c(path, 'Joint_tau'))
 Joint_tau_igcOmega = joint_summary(str_c(path, 'Joint_tau_igcOmega08'))
 Joint_tau_and_igcOmega = joint_summary(str_c(path, 'Joint_tau+igcOmega08'))
+
+Joint_all_igcOmega = joint_summary(str_c(path, 'Joint_all'))
+Joint_all_free56_igcOmega = joint_summary(str_c(path, 'Joint_all_free_2omega'))
+Joint_all_free6_igcOmega = joint_summary(str_c(path, 'Joint_all_free_igcOmega'))
+Joint_all_free5_igcOmega = joint_summary(str_c(path, 'Joint_all_free_omega'))
+Joint_all_free7_igcOmega = joint_summary(str_c(path, 'joint_all_free_tau'))
+
 
 save.image(file = "./Rdata/Fish.Rdata")
 

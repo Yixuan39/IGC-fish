@@ -15,7 +15,7 @@ rm(list = ls()) # clean current data
 library(tidyverse)
 library(gt)
 source("Functions.R")
-load('../Rdata/CenterFish.Rdata')
+load('../Rdata/Fish.Rdata')
 ```
 
 ```{r, include=FALSE}
@@ -57,28 +57,16 @@ igc.proportion <- function(dataset){
     out = data.frame(out)
     names(out) = c("names","proportion")
     out[,2] = as.numeric(out[,2])
+    out = data.frame(out, row.names = 1)
     return(out)
 }
 ```
 
 ```{r, include=FALSE}
-old.model.igc=igc.proportion(IGC1_Full) %>% arrange(proportion)
-new.model.igc=igc.proportion(IGC1_Full_igcOmega) %>% arrange(proportion)
-# plot(x=old.model.igc[,1],y=new.model.igc[,1])
-# abline(a=0,b=1)
-
-# proportion for share tau and tau'
-igc.p.tau_and_igcOmega = igc.proportion(Joint_tau_and_igcOmega) %>% arrange(proportion)
+propIGCXiang = igc.proportion(IGC1_Full)
+propIGChomo  = igc.proportion(IGC1_Full_Homo)
+propIGChomo/propIGCXiang
 ```
 
-
-## 39 fish data
-```{r, echo=FALSE}
-old.model.igc %>% gt() %>% tab_header("Model with one omega")
-new.model.igc %>% gt() %>% tab_header("Model with two omegas")
-igc.p.tau_and_igcOmega %>% gt() %>% tab_header("Model with two omegas", subtitle = "Sharing tau and tau'")
-
-
-```
 
 
