@@ -1,0 +1,67 @@
+---
+title: "Test for Homogenization Model"
+output:
+  pdf_document: default
+  html_document: default
+date: "2022-07-17"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+rm(list = ls())
+library(tidyverse)
+source('./Functions.R')
+library(kableExtra)
+```
+
+
+```{r, include=FALSE}
+# Read data
+path = '../input_files/'
+Test_Homo = IGC_summary(str_c(path, 'Test_Homo_0.9'))
+Test_Orig = IGC_summary(str_c(path, 'Test_omega_0.9'))
+```
+
+**number of data: 39**
+
+**Model: Original Model (omega=0.9); Homogenization Model (omega=0.9 & homogenizing_omega=0.9)**
+
+## IGC proportions under the two models are same.
+
+```{r, echo=FALSE}
+prop_homo = igc.proportion(Test_Homo)
+prop_orig = igc.proportion(Test_Orig)
+# colnames(table1) = c("orignalModel","homogenizingModel")
+# kable(table1,
+#       caption = "IGC proportion between different Models") %>%
+#   kable_styling(full_width = F)
+plot(prop_orig$proportion, prop_homo$proportion,
+     main = "IGC proportion: Original v.s. Homogenization",
+     xlab = "Original Model",
+     ylab = "Homogenization Model")
+abline(0,1)
+
+```
+
+## Difference between two models
+
+Table1: All close to 0.
+
+```{r, echo=FALSE}
+table_orig = Test_Orig[,c("ll","kappa","tau")]
+table_homo = Test_Homo[,c("ll","kappa","tau")]
+kable(table_orig - table_homo,
+      caption = "Original Model - Homogenization Model") %>%
+  kable_styling(full_width = F)
+
+```
+
+
+```{r}
+Test_Orig1 = subset(Test_Orig, select = - c(8))
+Test_Homo1 = subset(Test_Homo, select = - c(8,9))
+round(Test_Orig1 - Test_Homo1, digits = 2)
+```

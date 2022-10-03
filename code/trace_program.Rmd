@@ -1,0 +1,121 @@
+---
+title: "Parameters in IGCexpansion"
+output:
+  html_document: default
+  pdf_document: default
+date: "2022-09-14"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r library, include=FALSE}
+rm(list = ls())
+library(tidyverse)
+```
+
+# Information about the plots
+
+data: YBL087C_YER117W
+
+initial value of homo_omega: 0.9
+
+
+```{r, echo=FALSE}
+path = '../input_files/yeast/yeast_Homo/YBL087C_YER117W_input/save/record.txt'
+trace = read.csv(path, header = F)
+trace[,-1] = trace[,-1]
+trace = cbind(trace[,c(2,8,9,10)], 1:dim(trace)[1])
+colnames(trace) = c("likelihood", "omega", "homo_omega", "tau", "step")
+
+ll = ggplot(data = trace) +
+  geom_line(aes(x=step,y=likelihood)) +
+  ggtitle("likelihood")
+tau = ggplot(data = trace) +
+  geom_line(aes(x=step,y=tau))  +
+  ggtitle("tau")
+omega = ggplot(data = trace) +
+  geom_line(aes(x=step,y=omega)) +
+  ggtitle("omega")
+homo_omega = ggplot(data = trace) +
+  geom_line(aes(x=step,y=homo_omega)) +
+  ggtitle("homogenizing omega")
+ll;omega;homo_omega;tau
+
+likelihood=trace$likelihood
+for (i in 2:length(likelihood)) {
+  if(likelihood[i-1] > likelihood[i]){
+    print(str_c("log-likelihood: step ",i," is ", likelihood[i-1] - likelihood[i], " lower than the previous step."))
+  }
+}
+```
+
+# Information about the plots
+
+data: YML026C_YDR450W
+
+initial value of homo_omega: 0.9
+
+find likelihood goes lower at iteration 17
+
+```{r, echo=FALSE}
+path = '../input_files/yeast/yeast_Homo/YML026C_YDR450W_input/save/record.txt'
+trace1 = read.csv(path, header = F)
+trace1 = cbind(trace1[,c(2,8,9,10)], 1:dim(trace1)[1])
+colnames(trace1) = c("likelihood", "omega", "homo_omega", "tau", "step")
+
+ll = ggplot(data = trace1) +
+  geom_line(aes(x=step,y=likelihood)) +
+  ggtitle("likelihood")
+tau = ggplot(data = trace1) +
+  geom_line(aes(x=step,y=tau))  +
+  ggtitle("tau")
+omega = ggplot(data = trace1) +
+  geom_line(aes(x=step,y=omega)) +
+  ggtitle("omega")
+homo_omega = ggplot(data = trace1) +
+  geom_line(aes(x=step,y=homo_omega)) +
+  ggtitle("homogenizing omega")
+ll;omega;homo_omega;tau
+
+likelihood=trace1$likelihood
+for (i in 2:length(likelihood)) {
+  if(likelihood[i-1] > likelihood[i]){
+    print(str_c("log-likelihood: step ",i," is ", likelihood[i-1] - likelihood[i], " lower than the previous step."))
+  }
+}
+```
+
+
+
+# Force tau case
+
+```{r, echo=FALSE}
+path = '../input_files/test/yeast/yeast_forceTau_Homo/YBL087C_YER117W/save/record.txt'
+trace3 = read.csv(path, header = F)
+trace3[,-1] = trace3[,-1] %>% exp()
+trace3 = cbind(trace3[,c(1,6,7,8)], 1:dim(trace3)[1])
+colnames(trace3) = c("likelihood", "omega", "homo_omega", "tau", "step")
+
+ll = ggplot(data = trace3) +
+  geom_line(aes(x=step,y=likelihood)) +
+  ggtitle("likelihood")
+tau = ggplot(data = trace3) +
+  geom_line(aes(x=step,y=tau))  +
+  ggtitle("tau")
+omega = ggplot(data = trace3) +
+  geom_line(aes(x=step,y=omega)) +
+  ggtitle("omega")
+homo_omega = ggplot(data = trace3) +
+  geom_line(aes(x=step,y=homo_omega)) +
+  ggtitle("homogenizing omega")
+ll;omega;homo_omega;tau
+
+likelihood=trace3$likelihood
+for (i in 2:length(likelihood)) {
+  if(likelihood[i-1] > likelihood[i]){
+    print(str_c("log-likelihood: step ",i," is ", likelihood[i-1] - likelihood[i], " lower than the previous step."))
+  }
+}
+```
