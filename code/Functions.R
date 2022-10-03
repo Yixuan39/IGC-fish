@@ -18,32 +18,57 @@ joint_summary = function(file){
 }
 
 
-IGC_summary = function(directory){
+IGC_summary = function(directory, IGC1=T, Original_model=T, current = F){
   cases = str_sort(list.files(directory), numeric = TRUE)
-  output = c()
-  for(case in cases){
-    folder = str_c(directory, "/", case, "/summary")
-    files = list.files(folder)
-    file = str_subset(files, "summary")
-    if(length(files) > 0){
-      matrix = read.csv(file = str_c(folder, "/", file), header = FALSE, sep = " ")
-      num = matrix[1:((dim(matrix)[1]+1)/2-1),] %>% as.numeric()
-      name = matrix[((dim(matrix)[1]+1)/2+1):dim(matrix)[1],]
-      output = append(output,num)
-    }else{
-      print(case)
-      output = append(output,rep(NA, length(num)))
+  if (IGC1==T){
+    output = c()
+    for(case in cases){
+      folder = str_c(directory, "/", case, "/summary")
+      files = list.files(folder)
+      file = str_subset(files, "summary")
+      if(length(files) > 0){
+        matrix = read.csv(file = str_c(folder, "/", file), header = FALSE, sep = " ")
+        num = matrix[1:((dim(matrix)[1]+1)/2-1),] %>% as.numeric()
+        name = matrix[((dim(matrix)[1]+1)/2+1):dim(matrix)[1],]
+        output = append(output,num)
+      }else{
+        print(case)
+        data = read.csv(str_c(directory, '/', case, '/save/record.txt'), header = F)
+        output = append(output, data[dim(data)[1],])
+      }
     }
+    output = matrix(output, ncol = length(cases))
+    rownames(output) = name
+    colnames(output) = cases
+    output = t(output) %>% as.data.frame()
+    # exclude 6 data
+    `%ni%` <- Negate(`%in%`)
+    output = output %>% filter(row.names(output) %ni%
+                                 str_c('Pillar',c("852",
+                                                  "4287",
+                                                  "561",
+                                                  "2321",
+                                                  "3278"#, "3994"
+                                                  ),'R'))
+  } else {
+    output = data.frame()
+    for(case in cases){
+      folder = str_c(directory, "/", case, "/summary")
+      files = list.files(folder)
+      file = str_subset(files, "summary")
+      matrix = read.csv(file = str_c(folder, "/", file), header = FALSE, sep = " ")
+      num = matrix[1:((dim(matrix)[1]+1)/2-1),] %>% as.numeric() %>% as.matrix()
+      name = matrix[((dim(matrix)[1]+1)/2+1):dim(matrix)[1],]
+      num = rbind(case, num)
+      rownames(num) = c('case',name)
+      if(case == cases[1]){
+        output = t(num)
+      }else{
+        output = merge(output,t(num), all = TRUE, sort = FALSE)
+      }
+    }
+    output = data.frame(output, row.names = 1)
   }
-  output = matrix(output, ncol = length(cases))
-  rownames(output) = name
-  colnames(output) = cases
-  output = t(output) %>% as.data.frame()
-  # # exclude 6 data
-  # `%ni%` <- Negate(`%in%`)
-  # output = output %>% filter(row.names(output) %ni%
-  #                              c("852",	"4287", "561",
-  #                                "2321", "3278", "3994"))
   return(output)
 }
 
