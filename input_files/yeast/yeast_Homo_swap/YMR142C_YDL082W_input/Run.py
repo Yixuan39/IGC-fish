@@ -12,8 +12,8 @@ if __name__ == '__main__':
     alignment_file = [i for i in os.listdir('.') if 'fasta' in i][0]
     newicktree = [i for i in os.listdir('.') if 'newick' in i][0]
 
-    paralog = (name.replace('_input','')).split('_')
-    Force = None
+    paralog = ['01', '02']
+    Force = {6:0}
     clock = True
     model = 'MG94'
     Homo_Omega = 0.9
