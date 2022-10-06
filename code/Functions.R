@@ -68,6 +68,14 @@ IGC_summary = function(directory, IGC1=T, Original_model=T, current = F){
       }
     }
     output = data.frame(output, row.names = 1)
+    
+    ### get confidence table
+    confidence_table = read.csv(file = './input_files/TGD_bestorthos.txt', header = 1, sep = '\t')
+    confidence_table_95 = filter(confidence_table, BESTPROB >= 0.95 & gasterosteus_aculeatus1 != 'None' )
+    name_95per = str_c("Pillar",confidence_table_95[,1],"R")
+    IGC2_95 = intersect(name_95per, rownames(output))
+    
+    output = output[IGC2_95,]
   }
   return(output)
 }
