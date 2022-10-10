@@ -32,9 +32,15 @@ IGC_summary = function(directory, IGC1=T, Original_model=T, current = F){
         name = matrix[((dim(matrix)[1]+1)/2+1):dim(matrix)[1],]
         output = append(output,num)
       }else{
-        print(case)
-        data = read.csv(str_c(directory, '/', case, '/save/record.txt'), header = F)
-        output = append(output, data[dim(data)[1],])
+        if(file.exists(str_c(directory, '/', case, '/save/record.txt'))){
+          data = read.csv(str_c(directory, '/', case, '/save/record.txt'), header = F)
+          output = append(output, data[dim(data)[1],])
+          print(str_c(case, 'use record'))
+        }else{
+          data = rep(NA, length(num))
+          output = append(output, data)
+          print(str_c(case, 'missing'))
+        }
       }
     }
     output = matrix(output, ncol = length(cases))
@@ -56,15 +62,22 @@ IGC_summary = function(directory, IGC1=T, Original_model=T, current = F){
       folder = str_c(directory, "/", case, "/summary")
       files = list.files(folder)
       file = str_subset(files, "summary")
-      matrix = read.csv(file = str_c(folder, "/", file), header = FALSE, sep = " ")
-      num = matrix[1:((dim(matrix)[1]+1)/2-1),] %>% as.numeric() %>% as.matrix()
-      name = matrix[((dim(matrix)[1]+1)/2+1):dim(matrix)[1],]
-      num = rbind(case, num)
-      rownames(num) = c('case',name)
-      if(case == cases[1]){
-        output = t(num)
-      }else{
-        output = merge(output,t(num), all = TRUE, sort = FALSE)
+      if(length(file) != 0){
+        matrix = read.csv(file = str_c(folder, "/", file), header = FALSE, sep = " ")
+        num = matrix[1:((dim(matrix)[1]+1)/2-1),] %>% as.numeric() %>% as.matrix()
+        name = matrix[((dim(matrix)[1]+1)/2+1):dim(matrix)[1],]
+        num = rbind(case, num)
+        rownames(num) = c('case',name)
+        if(case == cases[1]){
+          output = t(num)
+        }else{
+          output = merge(output,t(num), all = TRUE, sort = FALSE)
+        }
+      } else {
+        missing_data = matrix(NA, dim(output)[2], 1)
+        missing_data[1,] = case
+        rownames(missing_data) = c('case',name)
+        output = merge(output, t(missing_data), all = TRUE, sort = FALSE)
       }
     }
     output = data.frame(output, row.names = 1)
@@ -74,9 +87,13 @@ IGC_summary = function(directory, IGC1=T, Original_model=T, current = F){
     confidence_table_95 = filter(confidence_table, BESTPROB >= 0.95 & gasterosteus_aculeatus1 != 'None' )
     name_95per = str_c("Pillar",confidence_table_95[,1],"R")
     IGC2_95 = intersect(name_95per, rownames(output))
-    
+
     output = output[IGC2_95,]
   }
+  #output = filter(output, rowSums(is.na(output[,1:2]))==0)
+  rname = rownames(output)
+  output = sapply(output, as.numeric) %>% as.data.frame()
+  rownames(output) = rname
   return(output)
 }
 

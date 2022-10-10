@@ -14,10 +14,20 @@ IGC1_forceTau_Homo_swap = IGC_summary(str_c(path, 'IGC1_forceTau_Homo_swap'))
 IGC1_Original_swap = IGC_summary(str_c(path, 'IGC1_Original_swap'))
 IGC1_forceTau_Original_swap = IGC_summary(str_c(path, 'IGC1_forceTau_Original_swap'))
 
-IGC1_Homo_unswap = IGC_summary(str_c(path, 'IGC1_Homo_unswap'))
-IGC1_forceTau_Homo_unswap = IGC_summary(str_c(path, 'IGC1_forceTau_Homo_unswap'))
-IGC1_Original_unswap = IGC_summary(str_c(path, 'IGC1_Original_unswap'))
-IGC1_forceTau_Original_unswap = IGC_summary(str_c(path, 'IGC1_forceTau_Original_unswap'))
+IGC1_Homo_switch = IGC_summary(str_c(path, 'IGC1_Homo_switch'))
+IGC1_forceTau_Homo_switch = IGC_summary(str_c(path, 'IGC1_forceTau_Homo_switch'))
+IGC1_Original_switch = IGC_summary(str_c(path, 'IGC1_Original_switch'))
+IGC1_forceTau_Original_switch = IGC_summary(str_c(path, 'IGC1_forceTau_Original_switch'))
+
+IGC1_Homo_swap_switch = IGC_summary(str_c(path, 'IGC1_Homo_swap_switch'))
+IGC1_forceTau_Homo_swap_switch = IGC_summary(str_c(path, 'IGC1_forceTau_Homo_swap_switch'))
+IGC1_Original_swap_switch = IGC_summary(str_c(path, 'IGC1_Original_swap_switch'))
+IGC1_forceTau_Original_swap_switch = IGC_summary(str_c(path, 'IGC1_forceTau_Original_swap_switch'))
+
+IGC1_Homo_unswap_unswitch = IGC_summary(str_c(path, 'IGC1_Homo_unswap_unswitch'))
+IGC1_forceTau_Homo_unswap_unswitch = IGC_summary(str_c(path, 'IGC1_forceTau_Homo_unswap_unswitch'))
+IGC1_Original_unswap_unswitch = IGC_summary(str_c(path, 'IGC1_Original_unswap_unswitch'))
+IGC1_forceTau_Original_unswap_unswitch = IGC_summary(str_c(path, 'IGC1_forceTau_Original_unswap_unswitch'))
 
 ### new model IGC2
 IGC2_Homo = IGC_summary(str_c(path, 'IGC2_Homo'), IGC1 = F, Original_model = F)
@@ -25,16 +35,26 @@ IGC2_forceTau_Homo = IGC_summary(str_c(path, 'IGC2_forceTau_Homo'), IGC1 = F, Or
 IGC2_Original = IGC_summary(str_c(path, 'IGC2_Original'), IGC1 = F)
 IGC2_forceTau_Original = IGC_summary(str_c(path, 'IGC2_forceTau_Original'), IGC1 = F)
 
-# swap test (no need to specify IGC1=F)
-IGC2_Homo_swap = IGC_summary(str_c(path, 'IGC2_Homo_swap'))
-IGC2_forceTau_Homo_swap = IGC_summary(str_c(path, 'IGC2_forceTau_Homo_swap'))
-IGC2_Original_swap = IGC_summary(str_c(path, 'IGC2_Original_swap'))
-IGC2_forceTau_Original_swap = IGC_summary(str_c(path, 'IGC2_forceTau_Original_swap'))
+# swap test
+IGC2_Homo_swap = IGC_summary(str_c(path, 'IGC2_Homo_swap'), IGC1 = F)
+IGC2_forceTau_Homo_swap = IGC_summary(str_c(path, 'IGC2_forceTau_Homo_swap'), IGC1 = F)
+IGC2_Original_swap = IGC_summary(str_c(path, 'IGC2_Original_swap'), IGC1 = F)
+IGC2_forceTau_Original_swap = IGC_summary(str_c(path, 'IGC2_forceTau_Original_swap'), IGC1 = F)
 
-IGC2_Homo_unswap = IGC_summary(str_c(path, 'IGC2_Homo_unswap'))
-IGC2_forceTau_Homo_unswap = IGC_summary(str_c(path, 'IGC2_forceTau_Homo_unswap'))
-IGC2_Original_unswap = IGC_summary(str_c(path, 'IGC2_Original_unswap'))
-IGC2_forceTau_Original_unswap = IGC_summary(str_c(path, 'IGC2_forceTau_Original_unswap'))
+IGC2_Homo_switch = IGC_summary(str_c(path, 'IGC2_Homo_switch'), IGC1 = F)
+IGC2_forceTau_Homo_switch = IGC_summary(str_c(path, 'IGC2_forceTau_Homo_switch'), IGC1 = F)
+IGC2_Original_switch = IGC_summary(str_c(path, 'IGC2_Original_switch'), IGC1 = F)
+IGC2_forceTau_Original_switch = IGC_summary(str_c(path, 'IGC2_forceTau_Original_switch'), IGC1 = F)
+
+IGC2_Homo_swap_switch = IGC_summary(str_c(path, 'IGC2_Homo_swap_switch'), IGC1 = F)
+IGC2_forceTau_Homo_swap_switch = IGC_summary(str_c(path, 'IGC2_forceTau_Homo_swap_switch'), IGC1 = F)
+IGC2_Original_swap_switch = IGC_summary(str_c(path, 'IGC2_Original_swap_switch'), IGC1 = F)
+IGC2_forceTau_Original_swap_switch = IGC_summary(str_c(path, 'IGC2_forceTau_Original_swap_switch'), IGC1 = F)
+
+IGC2_Homo_unswap_unswitch = IGC_summary(str_c(path, 'IGC2_Homo_unswap_unswitch'), IGC1 = F)
+IGC2_forceTau_Homo_unswap_unswitch = IGC_summary(str_c(path, 'IGC2_forceTau_Homo_unswap_unswitch'), IGC1 = F)
+IGC2_Original_unswap_unswitch = IGC_summary(str_c(path, 'IGC2_Original_unswap_unswitch'), IGC1 = F)
+IGC2_forceTau_Original_unswap_unswitch = IGC_summary(str_c(path, 'IGC2_forceTau_Original_unswap_unswitch'), IGC1 = F)
 
 # ## joint analysis
 # path = './input_files/CenterDiff/JointAnalysis/'
@@ -74,14 +94,25 @@ yeast_forceTau_Original = IGC_summary(str_c(path, 'yeast_forceTau_Original'))
 yeast_forceTau_Homo = IGC_summary(str_c(path, 'yeast_forceTau_Homo'))
 
 # swap test
-yeast_Original_swap = IGC_summary(str_c(path, 'yeast_Original_swap'))
 yeast_Homo_swap = IGC_summary(str_c(path, 'yeast_Homo_swap'))
-yeast_Original_unswap = IGC_summary(str_c(path, 'yeast_Original_unswap'))
-yeast_Homo_unswap = IGC_summary(str_c(path, 'yeast_Homo_unswap'))
-yeast_forceTau_Original_swap = IGC_summary(str_c(path, 'yeast_forceTau_Original_swap'))
 yeast_forceTau_Homo_swap = IGC_summary(str_c(path, 'yeast_forceTau_Homo_swap'))
-yeast_forceTau_Original_unswap = IGC_summary(str_c(path, 'yeast_forceTau_Original_unswap'))
-yeast_forceTau_Homo_unswap = IGC_summary(str_c(path, 'yeast_forceTau_Homo_unswap'))
+yeast_Original_swap = IGC_summary(str_c(path, 'yeast_Original_swap'))
+yeast_forceTau_Original_swap = IGC_summary(str_c(path, 'yeast_forceTau_Original_swap'))
+
+yeast_Homo_switch = IGC_summary(str_c(path, 'yeast_Homo_switch'))
+yeast_forceTau_Homo_switch = IGC_summary(str_c(path, 'yeast_forceTau_Homo_switch'))
+yeast_Original_switch = IGC_summary(str_c(path, 'yeast_Original_switch'))
+yeast_forceTau_Original_switch = IGC_summary(str_c(path, 'yeast_forceTau_Original_switch'))
+
+yeast_Homo_swap_switch = IGC_summary(str_c(path, 'yeast_Homo_swap_switch'))
+yeast_forceTau_Homo_swap_switch = IGC_summary(str_c(path, 'yeast_forceTau_Homo_swap_switch'))
+yeast_Original_swap_switch = IGC_summary(str_c(path, 'yeast_Original_swap_switch'))
+yeast_forceTau_Original_swap_switch = IGC_summary(str_c(path, 'yeast_forceTau_Original_swap_switch'))
+
+yeast_Homo_unswap_unswitch = IGC_summary(str_c(path, 'yeast_Homo_unswap_unswitch'))
+yeast_forceTau_Homo_unswap_unswitch = IGC_summary(str_c(path, 'yeast_forceTau_Homo_unswap_unswitch'))
+yeast_Original_unswap_unswitch = IGC_summary(str_c(path, 'yeast_Original_unswap_unswitch'))
+yeast_forceTau_Original_unswap_unswitch = IGC_summary(str_c(path, 'yeast_forceTau_Original_unswap_unswitch'))
 
 rm(path, IGC_summary, igc.proportion, joint_summary)
 save.image(file = "./Rdata/Fish&yeast.Rdata")

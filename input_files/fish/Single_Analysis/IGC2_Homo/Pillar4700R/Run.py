@@ -13,7 +13,7 @@ if __name__ == '__main__':
     newicktree = [i for i in os.listdir('.') if 'newick' in i][0]
 
     paralog = ['01', '02']
-    Force = {6:0}
+    Force = None
     clock = None
     model = 'MG94'
     Homo_Omega = 0.9
