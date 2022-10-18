@@ -12,7 +12,7 @@ if __name__ == '__main__':
     alignment_file = [i for i in os.listdir('.') if 'fasta' in i][0]
     newicktree = [i for i in os.listdir('.') if 'newick' in i][0]
 
-    paralog = (name.replace('_input','')).split('_')
+    paralog = (name.replace('_input', '')).split('_')
     Force = {5:0}
     clock = None
     model = 'MG94'

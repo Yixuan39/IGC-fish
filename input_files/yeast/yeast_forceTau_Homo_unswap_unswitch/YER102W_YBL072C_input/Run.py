@@ -16,7 +16,7 @@ if __name__ == '__main__':
     Force = {6:0}
     clock = True
     model = 'MG94'
-    Homo_Omega = True
+    Homo_Omega = 0.9
     IGC_Omega = None
     Tau_Omega = None
     
