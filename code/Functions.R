@@ -1,4 +1,5 @@
 library(tidyverse)
+load('Rdata/failed_data.Rdata')
 
 joint_summary = function(file){
   x = list.files(str_c(file, "/summary"))
@@ -17,8 +18,9 @@ joint_summary = function(file){
   return(table)
 }
 
+`%ni%` <- Negate(`%in%`)
 
-IGC_summary = function(directory, IGC1=T, Original_model=T, current = F){
+IGC_summary = function(directory, IGC1=T, Original_model=T, current = F, filter = NULL){
   cases = str_sort(list.files(directory), numeric = TRUE)
   if (IGC1==T){
     output = c()
@@ -39,7 +41,7 @@ IGC_summary = function(directory, IGC1=T, Original_model=T, current = F){
         }else{
           data = rep(NA, length(num))
           output = append(output, data)
-          print(str_c(case, 'missing'))
+          #print(str_c(case, 'missing'))
         }
       }
     }
@@ -48,14 +50,16 @@ IGC_summary = function(directory, IGC1=T, Original_model=T, current = F){
     colnames(output) = cases
     output = t(output) %>% as.data.frame()
     # exclude 6 data
-    `%ni%` <- Negate(`%in%`)
-    output = output %>% filter(row.names(output) %ni%
-                                 str_c('Pillar',c("852",
-                                                  "4287",
-                                                  "561",
-                                                  "2321",
-                                                  "3278"#, "3994"
-                                                  ),'R'))
+    if(is.null(filter) == F){
+      if(filter == 'included'){
+        output = output %>% filter(row.names(output) %ni% IGC1_filter)
+      }
+      if(filter == 'excluded'){
+        output = output %>% filter(row.names(output) %in% IGC1_filter)
+      }
+    }
+    
+    
   } else {
     output = data.frame()
     for(case in cases){
@@ -89,11 +93,24 @@ IGC_summary = function(directory, IGC1=T, Original_model=T, current = F){
     IGC2_95 = intersect(name_95per, rownames(output))
 
     output = output[IGC2_95,]
+    
+    if(is.null(filter) == F){
+      if(filter == 'included'){
+        output = output %>% filter(row.names(output) %ni% IGC2_filter)
+      }
+      if(filter == 'excluded'){
+        output = output %>% filter(row.names(output) %in% IGC2_filter)
+      }
+    }
+    
   }
   #output = filter(output, rowSums(is.na(output[,1:2]))==0)
   rname = rownames(output)
   output = sapply(output, as.numeric) %>% as.data.frame()
   rownames(output) = rname
+  if(sum(which(is.na(output)))){
+    print(rownames(output[is.na(output$ll),]))
+  }
   return(output)
 }
 
