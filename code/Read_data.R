@@ -114,7 +114,7 @@ IGC2_forceTau_Original_unswap_unswitch_failed = IGC_summary(str_c(path, 'IGC2_fo
 
 
 # add yeast data
-path = 'input_files/yeast/'
+path = 'input_files/yeast/Single_Analysis/'
 yeast_Original = IGC_summary(str_c(path, 'yeast_Original'))
 yeast_Homo = IGC_summary(str_c(path, 'yeast_Homo'))
 yeast_forceTau_Original = IGC_summary(str_c(path, 'yeast_forceTau_Original'))
