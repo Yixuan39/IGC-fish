@@ -6,7 +6,7 @@ An explanation of the name of each folder.
 
 `IGC1`: Fish dataset where all species have 2 paralogs
 
-`IGC2`: Fish dataset where at least one species has 1 or more missing paralogs.
+`IGC2`: Fish dataset where at least one species has 1 or more missing paralogs. (2 paralogs of stickleback and zebrafish DNA and 1 paralog of spotted gar DNA are assured.)
 
 ## Models
 
