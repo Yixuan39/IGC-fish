@@ -28,7 +28,7 @@ Swap tests use reduced datasets that only contain two paralogs of DNA sequence f
 
 *Here's a figure that shows how we change the data:*
 
-![4SwapSwitchCases](/Users/yixuanyang/Projects/IGC-fish/plots/4SwapSwitchCases.jpg)
+![4SwapSwitchCases](../../../plots/4SwapSwitchCases.jpg)
 
 
 
