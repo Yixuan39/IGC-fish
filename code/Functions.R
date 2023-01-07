@@ -1,5 +1,5 @@
 library(tidyverse)
-load('Rdata/failed_data.Rdata')
+#load('Rdata/failed_data.Rdata')
 
 joint_summary = function(file){
   x = list.files(str_c(file, "/summary"))
@@ -19,6 +19,20 @@ joint_summary = function(file){
 }
 
 `%ni%` <- Negate(`%in%`)
+
+standard_names = function (data) {
+  x = names(data)
+  x = str_replace(x, 'X', '')
+  x = gsub('..', '->', x, fixed = T)
+  ct = str_count(x,'[.]')
+  for (i in 1:length(ct)){
+    if (ct[i] != 0){
+      x[i] = str_sub(x[i], 2, -2)
+      x[i] = str_c('(', x[i], ')')
+    }
+  }
+  x = str_replace_all(x, '[.]', ',')
+}
 
 IGC_summary = function(directory, IGC1=T, Original_model=T, current = F, filter = NULL){
   cases = str_sort(list.files(directory), numeric = TRUE)
@@ -85,6 +99,7 @@ IGC_summary = function(directory, IGC1=T, Original_model=T, current = F, filter 
       }
     }
     output = data.frame(output, row.names = 1)
+    names(output) = standard_names(output)
     
     ### get confidence table
     confidence_table = read.csv(file = './input_files/TGD_bestorthos.txt', header = 1, sep = '\t')
@@ -141,9 +156,9 @@ igc.proportion <- function(dataset){
     }
   }
   for(j in 1:dim(dataset)[1]){
-    one2twoSum <- sum(dataset[j, one2two])
-    two2oneSum <- sum(dataset[j, two2one])
-    mutSum <- sum(dataset[j, mut])
+    one2twoSum <- sum(dataset[j, one2two], na.rm = TRUE)
+    two2oneSum <- sum(dataset[j, two2one], na.rm = TRUE)
+    mutSum <- sum(dataset[j, mut], na.rm = TRUE)
     num <- sum(one2twoSum, two2oneSum)
     den <- sum(num, mutSum)
     p = num/den
