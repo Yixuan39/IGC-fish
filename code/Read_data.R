@@ -1,4 +1,5 @@
 rm(list = ls())
+load('Rdata/failed_data.Rdata')
 source('./code/Functions.R')
 
 ##### Homo model
