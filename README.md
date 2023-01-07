@@ -6,6 +6,5 @@ The summary text files in the `input_files` folder are calculated using the `IGC
 You can find the software using this link: https://github.com/xji3/IGCexpansion.git
 
 ## Tree Topology
-<img src="./plots/fish-tree.png" alt="fish-tree" style="zoom:25%;" />
-
+<img src="./plots/Figure1.png" alt="fish-tree" style="zoom:25%;" />
 
