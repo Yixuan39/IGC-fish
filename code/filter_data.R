@@ -1,22 +1,18 @@
+rm(list = ls())
 library(tidyverse)
+source('./code/Functions.R')
 
-data = IGC2_forceTau_Original
-names(data)
-n = names(data)
-nn = n[!str_detect(n, "syn_dwell|tau|mut|2..1|1..2|2->1|1->2|length|ll|pi_a|pi_c|pi_g|pi_t|kappa|omega|N0")]
-m = data[,c(nn)]
-m[is.na(m)] = 0
-for(i in 1:nrow(m)){
-  if(any(m[i,] >= 1.5)){
-    print(rownames(data)[i])
-  }
-}
-
+IGC1_forceTau_Original = IGC_summary('./input_files/fish/Single_Analysis/IGC1_forceTau_Original')
+IGC1_forceTau_Original_unswap_unswitch = IGC_summary('./input_files/fish/Single_Analysis/IGC1_forceTau_Original_unswap_unswitch')
+IGC1_forceTau_Original_switch = IGC_summary('./input_files/fish/Single_Analysis/IGC1_forceTau_Original_switch')
+IGC2_forceTau_Original = IGC_summary('./input_files/fish/Single_Analysis/IGC2_forceTau_Original', IGC1 = F)
+IGC2_forceTau_Original_unswap_unswitch = IGC_summary('./input_files/fish/Single_Analysis/IGC2_forceTau_Original_unswap_unswitch', IGC1 = F)
+IGC2_forceTau_Original_switch = IGC_summary('./input_files/fish/Single_Analysis/IGC2_forceTau_Original_switch', IGC1 = F)
 
 filter_branch = function(data){
   name_list = c()
   n = names(data)
-  nn = n[!str_detect(n, "syn_dwell|tau|mut|2..1|1..2|2->1|1->2|length|ll|pi_a|pi_c|pi_g|pi_t|kappa|omega|N0")]
+  nn = n[!str_detect(n, "syn_dwell|tau|mut|2..1|1..2|2->1|1->2|length|ll|pi_a|pi_c|pi_g|pi_t|kappa|omega")]
   m = data[,c(nn)]
   m[is.na(m)] = 0
   for(i in 1:nrow(m)){
