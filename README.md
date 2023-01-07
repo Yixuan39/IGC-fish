@@ -1,8 +1,8 @@
 # IGC-fish
 
-
-
 ## File Structure
+
+All the results are stored in the `input_files` folder, and below is an example of how the files are stored.
 
 ```bash
 input_files
