@@ -1,0 +1,2 @@
+slurmstepd-node18: error: get_exit_code task 0 died by signal: 9
+slurmstepd-node61: error: *** JOB 433453 ON node61 CANCELLED AT 2022-11-17T12:04:38 ***

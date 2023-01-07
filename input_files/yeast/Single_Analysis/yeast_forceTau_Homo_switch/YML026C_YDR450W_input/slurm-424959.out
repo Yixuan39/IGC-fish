@@ -1,0 +1,2 @@
+slurmstepd-node15: error: get_exit_code task 0 died by signal: 9
+slurmstepd-node66: error: *** JOB 424959 ON node66 CANCELLED AT 2022-11-17T12:04:39 ***

@@ -1,0 +1,2 @@
+slurmstepd-node18: error: get_exit_code task 0 died by signal: 9
+slurmstepd-node62: error: *** JOB 425023 ON node62 CANCELLED AT 2022-11-17T12:04:47 ***
