@@ -27,6 +27,6 @@ To reproduce the results, you need first to install the `IGCexpansion` software.
 
 After installing the `IGCexpansion` software, you can run the script `Run.py` in each Pillar folder to get the results.
 
-## Tree Topology
+## Evolution Tree for Teleost
 <img src="./plots/Figure1.png" alt="fish-tree" style="zoom:25%;" />
 
