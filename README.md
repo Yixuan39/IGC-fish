@@ -9,7 +9,7 @@ input_files
 ├── fish                                                           # data for teleost
 │   └── Single_Analysis
 │       ├── IGC1_Homo                                              # folder named by dataset and model
-│       │   ├── Pillar1050R																		     # Pillar name
+│       │   ├── Pillar1050R                                        # Pillar name
 │       │   │   ├── Pillar1050R.fasta                              # Alignment file
 │       │   │   ├── Run.py                                         # Script that could reproduce the result
 │       │   │   ├── save
