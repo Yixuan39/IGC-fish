@@ -1,0 +1,277 @@
+---
+title: "plots for paper"
+output: pdf_document
+date: "2022-12-20"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+rm(list = ls())
+load('../Rdata/Fish&yeast.Rdata')
+library(tidyverse)
+library(latex2exp)
+library(patchwork)
+library(emdbook)
+source('../code/Functions.R')
+```
+
+
+
+# Figure 2
+
+Variable name meaning
+
+M1: $\omega$-IGC
+
+M2: $\omega_H/\omega_N$-IGC
+
+M3: $\omega$+IGC
+
+M4: $\omega_H/\omega_N$+IGC
+
+for fish:
+
+```{r, echo=F}
+'M1vsM4'
+M1vsM4 = (append(IGC1_Homo$ll, IGC2_Homo$ll) - append(IGC1_forceTau_Original$ll, IGC2_forceTau_Original$ll))*2
+mean(M1vsM4)
+length(M1vsM4[which((1-pchibarsq(M1vsM4, df = 2)) <= 0.05)])
+
+'M1vsM2'
+M1vsM2 = (append(IGC1_forceTau_Homo$ll, IGC2_forceTau_Homo$ll) - append(IGC1_forceTau_Original$ll, IGC2_forceTau_Original$ll))*2
+mean(M1vsM2)
+length(M1vsM2[which((1-pchibarsq(M1vsM2, df = 1)) < 0.05)])
+
+'M1vsM3'
+M1vsM3 = (append(IGC1_Original$ll, IGC2_Original$ll) - append(IGC1_forceTau_Original$ll, IGC2_forceTau_Original$ll))*2
+mean(M1vsM3)
+length(M1vsM3[which((1-pchibarsq(M1vsM3, df = 1)) < 0.05)])
+
+'M2vsM4'
+M2vsM4 = (append(IGC1_Homo$ll, IGC2_Homo$ll) - append(IGC1_forceTau_Homo$ll, IGC2_forceTau_Homo$ll))*2
+mean(M2vsM4)
+length(M2vsM4[which((1-pchibarsq(M2vsM4, df = 1)) < 0.05)])
+
+'M3vsM4'
+M3vsM4 = (append(IGC1_Homo$ll, IGC2_Homo$ll) - append(IGC1_Original$ll, IGC2_Original$ll))*2
+mean(M3vsM4)
+length(M3vsM4[which((1-pchibarsq(M3vsM4, df = 1)) < 0.05)])
+
+```
+
+for yeast:
+
+```{r, echo=F}
+'M1vsM4'
+M1vsM4 = (yeast_Homo$ll - yeast_forceTau_Original$ll)*2
+mean(M1vsM4)
+length(M1vsM4[which((1-pchibarsq(M1vsM4, df = 2)) < 0.05)])
+
+'M1vsM2'
+M1vsM2 = (yeast_forceTau_Homo$ll - yeast_forceTau_Original$ll)*2
+mean(M1vsM2)
+length(M1vsM2[which((1-pchibarsq(M1vsM2, df = 2)) < 0.05)])
+
+'M1vsM3'
+M1vsM3 = (yeast_Original$ll - yeast_forceTau_Original$ll)*2
+mean(M1vsM3)
+length(M1vsM3[which((1-pchibarsq(M1vsM3, df = 2)) < 0.05)])
+
+'M2vsM4'
+M2vsM4 = (yeast_Homo$ll - yeast_forceTau_Homo$ll)*2
+mean(M2vsM4)
+length(M2vsM4[which((1-pchibarsq(M2vsM4, df = 2)) < 0.05)])
+
+'M3vsM4'
+M3vsM4 = (yeast_Homo$ll - yeast_Original$ll)*2
+mean(M3vsM4)
+length(M3vsM4[which((1-pchibarsq(M3vsM4, df = 2)) < 0.05)])
+
+```
+
+# Figure 3
+
+```{r, echo=FALSE}
+fish_IGC1_x = (IGC1_Original$ll - IGC1_forceTau_Original$ll)/(IGC1_Homo$ll - IGC1_forceTau_Original$ll)
+fish_IGC2_x = (IGC2_Original$ll - IGC2_forceTau_Original$ll)/(IGC2_Homo$ll - IGC2_forceTau_Original$ll)
+fish_x = append(fish_IGC1_x,fish_IGC2_x)
+fish_IGC1_y = (IGC1_Homo$ll - IGC1_forceTau_Original$ll)*2
+fish_IGC2_y = (IGC2_Homo$ll - IGC2_forceTau_Original$ll)*2
+fish_y  = append(fish_IGC1_y, fish_IGC2_y)
+fish  = cbind(fish_x, fish_y, "teleosts")
+
+yeast_x = (yeast_Original$ll - yeast_forceTau_Original$ll)/(yeast_Homo$ll - yeast_forceTau_Original$ll)
+yeast_y = (yeast_Homo$ll - yeast_forceTau_Original$ll)*2
+yeast = cbind(yeast_x, yeast_y, "yeast")
+
+data = data.frame(rbind(fish, yeast))
+data[,1:2] = data[,1:2] %>% sapply(as.numeric)
+colnames(data) = c("x","y","species")
+
+fig3 = ggplot(data, aes(x, y, color = species)) +
+  geom_point() +
+  geom_hline(aes(yintercept=qchibarsq(0.95, df = 2) %>% round(2)), linetype='dashed', col = 'blue') + 
+  annotate('text', x = 1.15, y = qchibarsq(0.95, df = 2) %>% round(2), label = '5.14', color = 'blue') + 
+  coord_cartesian(xlim = c(0,1),clip="off") +
+  theme_bw() +
+  theme(aspect.ratio = 0.75,
+        plot.margin = margin(b = 1.5, t = 0.5, unit = 'cm')) +
+  xlab("Proportion when first adding IGC") +
+  ylab('Test Statistic')
+
+### fig 4
+
+fish_IGC1_x = (IGC1_forceTau_Homo$ll - IGC1_forceTau_Original$ll)/(IGC1_Homo$ll - IGC1_forceTau_Original$ll)
+fish_IGC2_x = (IGC2_forceTau_Homo$ll - IGC2_forceTau_Original$ll)/(IGC2_Homo$ll - IGC2_forceTau_Original$ll)
+fish_x = append(fish_IGC1_x,fish_IGC2_x)
+fish_IGC1_y = (IGC1_Homo$ll - IGC1_forceTau_Original$ll)*2
+fish_IGC2_y = (IGC2_Homo$ll - IGC2_forceTau_Original$ll)*2
+fish_y  = append(fish_IGC1_y, fish_IGC2_y)
+fish  = cbind(fish_x, fish_y, "teleosts")
+
+yeast_x = (yeast_forceTau_Homo$ll - yeast_forceTau_Original$ll)/(yeast_Homo$ll - yeast_forceTau_Original$ll)
+yeast_y = (yeast_Homo$ll - yeast_forceTau_Original$ll)*2
+yeast = cbind(yeast_x, yeast_y, "yeast")
+
+data = data.frame(rbind(fish, yeast))
+data[,1:2] = data[,1:2] %>% sapply(as.numeric)
+colnames(data) = c("x","y","species")
+
+fig4 = ggplot(data, aes(x, y, color = species)) +
+  geom_point() + 
+  geom_hline(aes(yintercept=qchibarsq(0.95, df = 2) %>% round(2)), linetype='dashed', col = 'blue') + 
+  annotate('text', x = 1.15, y = qchibarsq(0.95, df = 2) %>% round(2), label = '5.14', color = 'blue') + 
+  coord_cartesian(xlim = c(0,1),clip="off") +
+  theme_bw() +
+  theme(aspect.ratio = 0.75) +
+  xlab(TeX('Proportion when first adding $\\omega_H/\\omega_N$')) +
+  ylab('Test Statistic')
+
+fig3 / fig4 
+
+ggsave('~/Downloads/Figure3_vertical_arranged.pdf', fig3 / fig4, width = 4.51, height = 7.29)
+```
+
+```{r, echo=FALSE}
+fish_IGC1_x = (IGC1_Original$ll - IGC1_forceTau_Original$ll)/(IGC1_Homo$ll - IGC1_forceTau_Original$ll)
+fish_IGC2_x = (IGC2_Original$ll - IGC2_forceTau_Original$ll)/(IGC2_Homo$ll - IGC2_forceTau_Original$ll)
+fish_x = append(fish_IGC1_x,fish_IGC2_x)
+fish_IGC1_y = (IGC1_Homo$ll - IGC1_forceTau_Original$ll)*2
+fish_IGC2_y = (IGC2_Homo$ll - IGC2_forceTau_Original$ll)*2
+fish_y  = append(fish_IGC1_y, fish_IGC2_y)
+fish  = cbind(fish_x, fish_y, "teleosts")
+
+yeast_x = (yeast_Original$ll - yeast_forceTau_Original$ll)/(yeast_Homo$ll - yeast_forceTau_Original$ll)
+yeast_y = (yeast_Homo$ll - yeast_forceTau_Original$ll)*2
+yeast = cbind(yeast_x, yeast_y, "yeast")
+
+data = data.frame(rbind(fish, yeast))
+data[,1:2] = data[,1:2] %>% sapply(as.numeric)
+colnames(data) = c("x","y","species")
+
+fig3 = ggplot(data, aes(x, y, color = species)) +
+  geom_point() +
+  geom_hline(aes(yintercept=qchibarsq(0.95, df = 2) %>% round(2)), linetype='dashed', col = 'blue') + 
+  annotate('text', x = 1.15, y = qchibarsq(0.95, df = 2) %>% round(2), label = '5.14', color = 'blue') + 
+  coord_cartesian(xlim = c(0,1),clip="off") +
+  theme_bw() +
+  theme(aspect.ratio = 1, legend.position = 'none') +
+  xlab("Proportion when first adding IGC") +
+  ylab('Test Statistic')
+
+### fig 4
+
+fish_IGC1_x = (IGC1_forceTau_Homo$ll - IGC1_forceTau_Original$ll)/(IGC1_Homo$ll - IGC1_forceTau_Original$ll)
+fish_IGC2_x = (IGC2_forceTau_Homo$ll - IGC2_forceTau_Original$ll)/(IGC2_Homo$ll - IGC2_forceTau_Original$ll)
+fish_x = append(fish_IGC1_x,fish_IGC2_x)
+fish_IGC1_y = (IGC1_Homo$ll - IGC1_forceTau_Original$ll)*2
+fish_IGC2_y = (IGC2_Homo$ll - IGC2_forceTau_Original$ll)*2
+fish_y  = append(fish_IGC1_y, fish_IGC2_y)
+fish  = cbind(fish_x, fish_y, "teleosts")
+
+yeast_x = (yeast_forceTau_Homo$ll - yeast_forceTau_Original$ll)/(yeast_Homo$ll - yeast_forceTau_Original$ll)
+yeast_y = (yeast_Homo$ll - yeast_forceTau_Original$ll)*2
+yeast = cbind(yeast_x, yeast_y, "yeast")
+
+data = data.frame(rbind(fish, yeast))
+data[,1:2] = data[,1:2] %>% sapply(as.numeric)
+colnames(data) = c("x","y","species")
+
+fig4 = ggplot(data, aes(x, y, color = species)) +
+  geom_point() + 
+  geom_hline(aes(yintercept=qchibarsq(0.95, df = 2) %>% round(2)), linetype='dashed', col = 'blue') + 
+  annotate('text', x = 1.15, y = qchibarsq(0.95, df = 2) %>% round(2), label = '5.14', color = 'blue') + 
+  coord_cartesian(xlim = c(0,1),clip="off") +
+  theme_bw() +
+  theme(aspect.ratio = 1,
+        axis.text.y=element_blank(), #remove x axis labels
+        axis.ticks.y=element_blank(),
+        axis.title.y = element_blank()) +
+  xlab(TeX('Proportion when first adding $\\omega_H/\\omega_N$')) +
+  ylab(TeX('$\\omega-IGC$ vs. $\\omega_H/\\omega_N+IGC$'))
+
+fig3 + fig4 
+
+ggsave('~/Downloads/Figure3_horizontal_arranged.pdf', fig3 + fig4 )
+```
+
+# Figure 5
+
+```{r, echo=FALSE}
+igc.prop = rbind(igc.proportion(IGC1_Original), igc.proportion(IGC2_Original))
+fig4_ggp = ggplot(igc.prop, aes(proportion)) +
+  geom_histogram(bins = 10, fill = 'lightgrey', col = 'black') +
+  theme_bw() +
+  theme(aspect.ratio = 0.8) +
+  xlab('Proportion') +
+  ylab('Frequency')
+
+pdf('~/Downloads/Figure4_graphic.pdf')
+hist(igc.prop$proportion, xlab = 'Proportion', main = NULL)
+dev.off()
+
+summary(igc.prop)
+
+ggsave('~/Downloads/Figure4_ggplot.pdf', fig4_ggp)
+
+```
+
+
+# Figure 6
+
+```{r, echo=FALSE}
+fish = rbind(IGC1_Homo[,8:9], IGC2_Homo[,8:9])
+fig5 = ggplot(fish) +
+  geom_point(aes(omega, homogenizing_omega)) +
+  geom_abline(col = 'blue') +
+  tune::coord_obs_pred() +
+  theme_bw() +
+  theme(aspect.ratio = 1) +
+  xlab(TeX('$\\omega_N$')) +
+  ylab(TeX('$\\omega_H$'))
+
+ggsave('~/Downloads/Figure5.pdf', fig5)
+```
+
+
+# Figure 7
+
+```{r, echo=FALSE}
+fish_omegaH = append(IGC1_Homo[,9], IGC2_Homo[,9])
+fish_forceTau_omegaH = append(IGC1_forceTau_Homo[,9], IGC2_forceTau_Homo[,9])
+fish_omegaH = data.frame(fish_forceTau_omegaH, fish_omegaH)
+
+fig6 = ggplot(fish_omegaH) +
+  geom_point(aes(fish_forceTau_omegaH, fish_omegaH)) +
+  geom_abline(col = 'blue') +
+  tune::coord_obs_pred() +
+  theme_bw() +
+  theme(aspect.ratio = 1) +
+  xlab(TeX('$\\omega_H$ estimates without IGC')) +
+  ylab(TeX('$\\omega_H$ estimates with IGC'))
+
+ggsave('~/Downloads/Figure6.pdf')
+```
