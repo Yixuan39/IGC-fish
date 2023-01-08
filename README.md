@@ -1,25 +1,21 @@
-# IGC-fish
+---
+title: Interlocus Gene Conversion, Natural Selection, and Paralog Homogenization Supplementary Material
+author: Yixuan Yang and Xiang Ji
+header-includes: |
+    \usepackage{tikz,pgfplots}
+    \usepackage{fancyhdr}
+    \pagestyle{fancy}
+    \fancyhead[CO,CE]{This is fancy}
+    \fancyfoot[CO,CE]{So is this}
+    \fancyfoot[LE,RO]{\thepage}
+---
+# Interlocus Gene Conversion, Natural Selection, and Paralog Homogenization Supplementary Material
 
 ## File Structure
 
-All the results are stored in the `input_files` folder, and below is an example of how the files are stored.
+All the results are stored in the `input_files` folder, and each subfolder has its detailed readme file explaining its content.
 
-```bash
-input_files
-├── fish                                                           # data for teleost
-│   └── Single_Analysis
-│       ├── IGC1_Homo                                              # folder named by dataset and model
-│       │   ├── Pillar1050R                                        # Pillar name
-│       │   │   ├── Pillar1050R.fasta                              # Alignment file
-│       │   │   ├── Run.py                                         # Script that could reproduce the result
-│       │   │   ├── save
-│       │   │   │   ├── MG94homoOmega__01_02_nonclock_save.npy     # Saved parameters
-│       │   │   │   └── MG94homoOmega__01_02_nonclock_save.txt
-│       │   │   ├── slurm-423628.out                               # Log file
-│       │   │   ├── summary
-│       │   │   │   └── MG94_homoOmega_01_02_nonclock_summary.txt  # A summary file that saves all results
-│       │   │   └── tree.newick                                    # newick tree file
-```
+For example, the folder `input_files/fish/Analysis/IGC1_forceTau_Homo/Pillar211R` contains the `Run.py` file to perform the analysis of Pillar 211 data set where all ingroup species have 2 paralogs present under the model 
 
 ## Result Reproduction
 
