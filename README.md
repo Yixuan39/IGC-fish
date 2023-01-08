@@ -2,13 +2,13 @@
 
 ## File Structure
 
-All the results are stored in the `input_files` folder, and each subfolder has its detailed readme file explaining its content.
+All the results are stored in the `input_files` folder, and each subfolder has a detailed readme file explaining its content.
 
 For example, the folder `input_files/fish/Analysis/IGC1_forceTau_Homo/Pillar211R` contains the `Run.py` file to perform the analysis of Pillar 211 data set where all ingroup species have 2 paralogs present under the ![equation](https://latex.codecogs.com/svg.image?%5Comega_H/%5Comega_N-IGC) model.
 
 ## Models
 
-Here is a list of folder name convention with their model as described in the manuscript.
+Here is a list of folder name convention with their corresponding model as described in the manuscript.
 
 |Model name in folder | Model in manuscript|
 |:---------:|:----------:|
@@ -38,4 +38,7 @@ After installing the `IGCexpansion` software, you can run the script `Run.py` in
 
 ## Phylogenetic Tree for Teleost
 <img src="./plots/Figure1.png" alt="fish-tree" style="zoom:25%;" />
+
+## Phylogenetic Tree for Yeast
+<img src="./plots/YeastTree.jpg" alt="fish-tree" style="zoom:75%;" />
 
