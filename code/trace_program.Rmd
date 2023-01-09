@@ -1,8 +1,8 @@
 ---
 title: "Parameters in IGCexpansion"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 date: "2022-09-14"
 ---
 
@@ -23,7 +23,7 @@ initial value of homo_omega: 0.9
 
 
 ```{r, echo=FALSE}
-path = '../input_files/yeast/yeast_Homo/YBL087C_YER117W_input/save/record.txt'
+path = '../input_files/yeast/Analysis/yeast_Homo/YBL087C_YER117W_input/save/record.txt'
 trace = read.csv(path, header = F)
 trace[,-1] = trace[,-1]
 trace = cbind(trace[,c(2,8,9,10)], 1:dim(trace)[1])
@@ -60,7 +60,7 @@ initial value of homo_omega: 0.9
 find likelihood goes lower at iteration 17
 
 ```{r, echo=FALSE}
-path = '../input_files/yeast/yeast_Homo/YML026C_YDR450W_input/save/record.txt'
+path = '../input_files/yeast/Analysis/yeast_Homo/YML026C_YDR450W_input/save/record.txt'
 trace1 = read.csv(path, header = F)
 trace1 = cbind(trace1[,c(2,8,9,10)], 1:dim(trace1)[1])
 colnames(trace1) = c("likelihood", "omega", "homo_omega", "tau", "step")
@@ -92,7 +92,7 @@ for (i in 2:length(likelihood)) {
 # Force tau case
 
 ```{r, echo=FALSE}
-path = '../input_files/test/yeast/yeast_forceTau_Homo/YBL087C_YER117W/save/record.txt'
+path = '../input_files/yeast/Analysis/yeast_forceTau_Homo/YBL087C_YER117W_input/save/record.txt'
 trace3 = read.csv(path, header = F)
 trace3[,-1] = trace3[,-1] %>% exp()
 trace3 = cbind(trace3[,c(1,6,7,8)], 1:dim(trace3)[1])

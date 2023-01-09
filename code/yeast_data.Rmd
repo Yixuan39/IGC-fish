@@ -16,7 +16,7 @@ source('Functions.R')
 ```
 
 ```{r, echo=FALSE}
-path = '../input_files/yeast/'
+path = '../input_files/yeast/Analysis/'
 yeast_homo_forceTau = IGC_summary(str_c(path, 'yeast_forceTau_Homo'))
 yeast_homo = IGC_summary(str_c(path, 'yeast_Homo'))
 yeast_orig_forceTau = IGC_summary(str_c(path, 'yeast_forceTau_Original'))
