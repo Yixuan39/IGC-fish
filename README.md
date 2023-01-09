@@ -25,9 +25,17 @@ Swap tests use reduced datasets that only contain two paralogs of DNA sequence f
 
 `switch/unswitch`: when switching the data, we exchange the sequence between `ingroup species 1 paralog 1` and `ingroup species 2 paralog2`.
 
-*Here's a figure that shows how we change the data:*
+*Here are two figures showing the cases for the fish and yeast data sets:*
 
-![4SwapSwitchCases](plots/4SwapSwitchCases.jpg)
+<p>
+    <img src="plots/4SwapSwitchCases.jpg" alt>
+    <em><center>Fish cases</center></em>
+</p>
+
+<p>
+    <img src="plots/4SwapSwitchCases_Yeast.jpg" alt>
+    <em><center>Yeast cases</center></em>
+</p>
 
 
 ## Software
@@ -36,7 +44,7 @@ To reproduce the results, you need to install the `IGCexpansion` software. The i
 
 After installing the `IGCexpansion` software, you can run the script `Run.py` in each Pillar folder to get the results.
 
-## Phylogenetic Tree for Teleost
+## Phylogenetic Tree for Teleost Fish
 <img src="./plots/Figure1.png" alt="fish-tree" style="zoom:25%;" />
 
 ## Phylogenetic Tree for Yeast
